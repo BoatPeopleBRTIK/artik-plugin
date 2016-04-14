@@ -60,6 +60,10 @@ cp %{_builddir}/%{name}-%{version}/adbd.service %{buildroot}/usr/lib/systemd/sys
 # connman
 cp -r %{_builddir}/%{name}-%{version}/connman/* %{buildroot}
 
+# Open JDK
+mkdir -p %{buildroot}/etc/profile.d
+cp %{_builddir}/%{name}-%{version}/open-jdk.sh %{buildroot}/etc/profile.d
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -228,3 +232,15 @@ systemctl enable connman.service
 %files connman
 %attr(0644,root,root) /etc/connman/main.conf
 %attr(0644,root,root) /var/lib/connman/settings
+
+###############################################################################
+# Open JDK
+%package openjdk
+Summary:	openjdk
+Group:		System
+
+%description openjdk
+Open JDK
+
+%files openjdk
+%attr(0644,root,root) /etc/profile.d/open-jdk.sh
