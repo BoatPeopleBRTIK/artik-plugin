@@ -54,7 +54,8 @@ mkdir -p %{buildroot}/usr/bin
 cp %{_builddir}/%{name}-%{version}/audio_setting.sh %{buildroot}/usr/bin
 
 # wifi
-cp -r %{_builddir}/%{name}-%{version}/wifi/etc %{buildroot}
+mkdir -p %{buildroot}/etc/wifi
+cp %{_builddir}/%{name}-%{version}/wifi/${TARGET}/* %{buildroot}/etc/wifi
 
 # adbd
 cp -r %{_builddir}/%{name}-%{version}/adbd/usr %{buildroot}
