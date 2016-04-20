@@ -68,6 +68,14 @@ cp -r %{_builddir}/%{name}-%{version}/connman/* %{buildroot}
 mkdir -p %{buildroot}/etc/profile.d
 cp %{_builddir}/%{name}-%{version}/open-jdk.sh %{buildroot}/etc/profile.d
 
+# CoAP californium
+mkdir -p %{buildroot}/opt/californium
+cp -r %{_builddir}/%{name}-%{version}/californium/* %{buildroot}/opt/californium/
+
+# lwM2M leshan
+mkdir -p %{buildroot}/opt/leshan
+cp -r %{_builddir}/%{name}-%{version}/leshan/* %{buildroot}/opt/leshan/
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -249,3 +257,30 @@ Open JDK
 
 %files openjdk
 %attr(0644,root,root) /etc/profile.d/open-jdk.sh
+
+###############################################################################
+# californium
+%package californium
+Summary:	CoAP californium demonstration application
+Group:		Application
+
+%description californium
+californium
+
+%files californium
+%attr(0755,root,root) /opt/californium/*.jar
+%attr(0644,root,root) /opt/californium/lib/*.jar
+
+###############################################################################
+#
+%package leshan
+Summary:	lwM2M leshan demonstration application
+Group:		Application
+
+%description leshan
+leshan
+
+%files leshan
+%attr(0755,root,root) /opt/leshan/*.jar
+%attr(0644,root,root) /opt/leshan/lib/*.jar
+
