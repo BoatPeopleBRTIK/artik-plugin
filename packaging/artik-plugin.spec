@@ -32,7 +32,7 @@ mkdir -p %{buildroot}/etc/udev/rules.d
 cp %{_builddir}/%{name}-%{version}/10-local.rules %{buildroot}/etc/udev/rules.d
 
 mkdir -p  %{buildroot}/etc/bluetooth
-cp -r %{_builddir}/%{name}-%{version}/bluetooth/* %{buildroot}/etc/bluetooth
+cp -r %{_builddir}/%{name}-%{version}/bluetooth/${TARGET}/* %{buildroot}/etc/bluetooth
 
 # fstab
 mkdir -p %{buildroot}/etc
