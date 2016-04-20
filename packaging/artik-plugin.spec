@@ -16,6 +16,10 @@ ARTIK plugin files for fedora
 %install
 rm -rf %{buildroot}
 
+# determine arch and OS for rpm
+mkdir -p %{buildroot}/etc/rpm
+cp -rf %{_builddir}/%{name}-%{version}/platform %{buildroot}/etc/rpm
+
 # Bluetooth
 mkdir -p %{buildroot}/etc
 cp -r %{_builddir}/%{name}-%{version}/modules-load.d %{buildroot}/etc/
@@ -97,6 +101,7 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 ###############################################################################
 # artik-plugin
 %files
+%attr(0644,root,root) /etc/rpm/platform
 
 ###############################################################################
 # Bluetooth
