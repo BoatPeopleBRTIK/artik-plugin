@@ -59,7 +59,8 @@ mkdir -p %{buildroot}/etc/wifi
 cp %{_builddir}/%{name}-%{version}/wifi/${TARGET}/* %{buildroot}/etc/wifi
 
 # adbd
-cp -r %{_builddir}/%{name}-%{version}/adbd/usr %{buildroot}
+mkdir -p %{buildroot}/usr/bin
+cp -r %{_builddir}/%{name}-%{version}/adbd/${TARGET}/* %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp %{_builddir}/%{name}-%{version}/adbd.service %{buildroot}/usr/lib/systemd/system
 
