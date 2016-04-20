@@ -36,7 +36,7 @@ cp -r %{_builddir}/%{name}-%{version}/bluetooth/* %{buildroot}/etc/bluetooth
 
 # fstab
 mkdir -p %{buildroot}/etc
-cp %{_builddir}/%{name}-%{version}/fstab/fstab %{buildroot}/etc
+cp %{_builddir}/%{name}-%{version}/fstab/fstab-${TARGET} %{buildroot}/etc/fstab
 
 # network
 mkdir -p %{buildroot}/etc/sysconfig/network-scripts
