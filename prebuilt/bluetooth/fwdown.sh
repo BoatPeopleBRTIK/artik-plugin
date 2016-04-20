@@ -51,7 +51,7 @@ fi
 
 pushd `dirname $0`
 
-./brcm_patchram_plus --patchram BCM4354_003.001.012.0353.0745_Samsung_Artik_ORC.hcd \
+./brcm_patchram_plus --patchram BCM4354_003.001.012.0353.0745c_Samsung_Artik_ORC.hcd \
 	--no2bytes --baudrate 3000000 \
 	--use_baudrate_for_download /dev/ttySAC${TTY_NUM} \
 	--bd_addr ${BD_ADDR} \

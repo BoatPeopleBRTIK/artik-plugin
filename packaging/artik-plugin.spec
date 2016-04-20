@@ -31,7 +31,8 @@ cp %{_builddir}/%{name}-%{version}/brcm-firmware.service %{buildroot}/usr/lib/sy
 mkdir -p %{buildroot}/etc/udev/rules.d
 cp %{_builddir}/%{name}-%{version}/10-local.rules %{buildroot}/etc/udev/rules.d
 
-cp -r %{_builddir}/%{name}-%{version}/bluetooth/etc %{buildroot}
+mkdir -p  %{buildroot}/etc/bluetooth
+cp -r %{_builddir}/%{name}-%{version}/bluetooth/* %{buildroot}/etc/bluetooth
 
 # fstab
 mkdir -p %{buildroot}/etc
@@ -284,4 +285,3 @@ leshan
 %files leshan
 %attr(0755,root,root) /opt/leshan/*.jar
 %attr(0644,root,root) /opt/leshan/lib/*.jar
-
