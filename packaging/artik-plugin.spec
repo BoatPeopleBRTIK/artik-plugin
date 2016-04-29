@@ -52,7 +52,10 @@ cp %{_builddir}/%{name}-%{version}/pulseaudio.service %{buildroot}/usr/lib/syste
 cp %{_builddir}/%{name}-%{version}/audiosetting.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/usr/bin
-cp %{_builddir}/%{name}-%{version}/audio_setting.sh %{buildroot}/usr/bin
+cp %{_builddir}/%{name}-%{version}/audio/${TARGET}/audio_setting.sh %{buildroot}/usr/bin
+
+mkdir -p %{buildroot}/usr/share/alsa
+cp %{_builddir}/%{name}-%{version}/audio/${TARGET}/alsa.conf %{buildroot}/usr/share/alsa
 
 # wifi
 mkdir -p %{buildroot}/etc/wifi
