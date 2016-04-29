@@ -86,6 +86,12 @@ cp -r %{_builddir}/%{name}-%{version}/leshan/* %{buildroot}/opt/leshan/
 mkdir -p %{buildroot}/etc
 cp %{_builddir}/%{name}-%{version}/release/${TARGET}/artik_release %{buildroot}/etc
 
+%define TARGET $TARGET
+
+# systemd module load service
+mkdir -p %{buildroot}/usr/lib/systemd/system
+cp %{_builddir}/%{name}-%{version}/systemd-modules-load.service %{buildroot}/usr/lib/systemd/system
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -102,6 +108,9 @@ sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
 systemctl enable systemd-timesyncd.service
 systemctl enable systemd-resolved.service
 systemctl enable mariadb.service
+
+# systemd module load service
+systemctl enable systemd-modules-load.service
 
 # Dnsmasq setting
 sed -i 's/\#except-interface=/except-interface=lo/g'  /etc/dnsmasq.conf
@@ -121,6 +130,7 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 %files
 %attr(0644,root,root) /etc/rpm/platform
 %attr(0644,root,root) /etc/artik_release
+%attr(0644,root,root) /usr/lib/systemd/system/systemd-modules-load.service
 
 ###############################################################################
 # Bluetooth
