@@ -82,6 +82,10 @@ cp -r %{_builddir}/%{name}-%{version}/californium/* %{buildroot}/opt/californium
 mkdir -p %{buildroot}/opt/leshan
 cp -r %{_builddir}/%{name}-%{version}/leshan/* %{buildroot}/opt/leshan/
 
+# artik_release
+mkdir -p %{buildroot}/etc
+cp %{_builddir}/%{name}-%{version}/release/${TARGET}/artik_release %{buildroot}/etc
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -116,6 +120,7 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 # artik-plugin
 %files
 %attr(0644,root,root) /etc/rpm/platform
+%attr(0644,root,root) /etc/artik_release
 
 ###############################################################################
 # Bluetooth
