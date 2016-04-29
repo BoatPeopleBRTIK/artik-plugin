@@ -209,6 +209,7 @@ sed -i '/<\/busconfig>/i \ \ <policy user="pulse">\n\ \ \ \ <allow send_destinat
 %attr(0644,root,root) /usr/lib/systemd/system/pulseaudio.service
 %attr(0755,root,root) /usr/bin/audio_setting.sh
 %attr(0644,root,root) /usr/lib/systemd/system/audiosetting.service
+%attr(0644,root,root) /usr/share/alsa/alsa.conf
 
 ###############################################################################
 # Wifi
