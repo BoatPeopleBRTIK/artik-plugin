@@ -1,5 +1,5 @@
 [Unit]
-Description=BCM4354 Bluetooth firmware service
+Description=Bluetooth firmware service
 Before=bluetooth.target
 
 [Service]
