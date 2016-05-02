@@ -2,7 +2,7 @@
 
 if [ -n "$1" ]
 then
-export TARGET=$1
+echo "build $1"
 else
 echo "build.sh [TARGET]"
 exit
@@ -21,7 +21,6 @@ cp -rf ./scripts/* artik-plugin-0.1
 cp -rf ./configs/* artik-plugin-0.1
 cp -rf ./rules/* artik-plugin-0.1
 
-
 tar zcvf ~/rpmbuild/SOURCES/artik-plugin-0.1.tar.gz ./artik-plugin-0.1
 rm -rf artik-plugin-0.1
-rpmbuild --target=armv7hl -ba ./packaging/artik-plugin.spec
+rpmbuild --target=armv7hl -ba --define "TARGET $1" ./packaging/artik-plugin.spec

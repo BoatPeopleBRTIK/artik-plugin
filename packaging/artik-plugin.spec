@@ -32,11 +32,11 @@ mkdir -p %{buildroot}/etc/udev/rules.d
 cp %{_builddir}/%{name}-%{version}/10-local.rules %{buildroot}/etc/udev/rules.d
 
 mkdir -p  %{buildroot}/etc/bluetooth
-cp -r %{_builddir}/%{name}-%{version}/bluetooth/${TARGET}/* %{buildroot}/etc/bluetooth
+cp -r %{_builddir}/%{name}-%{version}/bluetooth/%{TARGET}/* %{buildroot}/etc/bluetooth
 
 # fstab
 mkdir -p %{buildroot}/etc
-cp %{_builddir}/%{name}-%{version}/fstab/fstab-${TARGET} %{buildroot}/etc/fstab
+cp %{_builddir}/%{name}-%{version}/fstab/fstab-%{TARGET} %{buildroot}/etc/fstab
 
 # network
 mkdir -p %{buildroot}/etc/sysconfig/network-scripts
@@ -52,18 +52,21 @@ cp %{_builddir}/%{name}-%{version}/pulseaudio.service %{buildroot}/usr/lib/syste
 cp %{_builddir}/%{name}-%{version}/audiosetting.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/usr/bin
-cp %{_builddir}/%{name}-%{version}/audio/${TARGET}/audio_setting.sh %{buildroot}/usr/bin
+cp %{_builddir}/%{name}-%{version}/audio/%{TARGET}/audio_setting.sh %{buildroot}/usr/bin
 
+if [ %{TARGET} = "artik710" ]; then
+echo "target is artik710"
 mkdir -p %{buildroot}/usr/share/alsa
-cp %{_builddir}/%{name}-%{version}/audio/${TARGET}/alsa.conf %{buildroot}/usr/share/alsa
+cp %{_builddir}/%{name}-%{version}/audio/%{TARGET}/alsa.conf %{buildroot}/usr/share/alsa
+fi
 
 # wifi
 mkdir -p %{buildroot}/etc/wifi
-cp %{_builddir}/%{name}-%{version}/wifi/${TARGET}/* %{buildroot}/etc/wifi
+cp %{_builddir}/%{name}-%{version}/wifi/%{TARGET}/* %{buildroot}/etc/wifi
 
 # adbd
 mkdir -p %{buildroot}/usr/bin
-cp -r %{_builddir}/%{name}-%{version}/adbd/${TARGET}/* %{buildroot}/usr/bin
+cp -r %{_builddir}/%{name}-%{version}/adbd/%{TARGET}/* %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp %{_builddir}/%{name}-%{version}/adbd.service %{buildroot}/usr/lib/systemd/system
 
@@ -84,9 +87,7 @@ cp -r %{_builddir}/%{name}-%{version}/leshan/* %{buildroot}/opt/leshan/
 
 # artik_release
 mkdir -p %{buildroot}/etc
-cp %{_builddir}/%{name}-%{version}/release/${TARGET}/artik_release %{buildroot}/etc
-
-%define TARGET $TARGET
+cp %{_builddir}/%{name}-%{version}/release/%{TARGET}/artik_release %{buildroot}/etc
 
 # systemd module load service
 mkdir -p %{buildroot}/usr/lib/systemd/system
@@ -224,7 +225,10 @@ sed -i '/<\/busconfig>/i \ \ <policy user="pulse">\n\ \ \ \ <allow send_destinat
 %attr(0644,root,root) /usr/lib/systemd/system/pulseaudio.service
 %attr(0755,root,root) /usr/bin/audio_setting.sh
 %attr(0644,root,root) /usr/lib/systemd/system/audiosetting.service
+
+%if "%{TARGET}" == "artik710"
 %attr(0644,root,root) /usr/share/alsa/alsa.conf
+%endif
 
 ###############################################################################
 # Wifi
