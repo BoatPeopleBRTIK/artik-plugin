@@ -5,6 +5,13 @@ Release:	1
 Group:		System Environment/Base
 License:	none
 
+Requires:       systemd
+Requires:       setup
+Requires:       pulseaudio
+Requires:       bluez
+Requires:       connman
+Requires:       mariadb
+
 Source0:	%{name}-%{version}.tar.gz
 
 %description
