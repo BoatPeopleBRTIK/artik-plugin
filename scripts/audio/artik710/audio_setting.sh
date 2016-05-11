@@ -16,3 +16,7 @@ amixer cset numid=161 0
 amixer cset numid=163 1
 amixer cset numid=151 1
 amixer cset numid=149 1
+amixer cset numid=5 80%
+amixer cset numid=9 80%
+amixer cset numid=10 80%
+amixer cset numid=17 80%
