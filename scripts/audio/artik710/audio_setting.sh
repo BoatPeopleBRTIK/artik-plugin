@@ -1,22 +1,22 @@
 #!/bin/bash
 
-amixer cset numid=137 0
-amixer cset numid=136 0
-amixer cset numid=141 1
-amixer cset numid=139 1
-amixer cset numid=126 1
-amixer cset numid=123 1
-amixer cset numid=133 1
-amixer cset numid=132 1
-amixer cset numid=69 1
-amixer cset numid=68 1
-amixer cset numid=187 1
-amixer cset numid=181 1
-amixer cset numid=161 0
-amixer cset numid=163 1
-amixer cset numid=151 1
-amixer cset numid=149 1
-amixer cset numid=5 80%
-amixer cset numid=9 80%
-amixer cset numid=10 80%
-amixer cset numid=17 80%
+amixer sset "DAC L1 Mux" "IF1 DAC1"
+amixer sset "DAC R1 Mux" "IF1 DAC1"
+amixer sset "DAC1 MIXL DAC1" on
+amixer sset "DAC1 MIXR DAC1" on
+amixer sset "Stereo DAC MIXL DAC L1" on
+amixer sset "Stereo DAC MIXR DAC R1" on
+amixer sset "DAC L1 Source" "Stereo DAC Mixer"
+amixer sset "DAC R1 Source" "Stereo DAC Mixer"
+amixer sset "HPO L" on
+amixer sset "HPO R" on
+amixer sset "RECMIX1L BST2" on
+amixer sset "RECMIX1R BST2" on
+amixer sset "Stereo1 ADC Source" "ADC1"
+amixer sset "Stereo1 ADC1 Source" "ADC"
+amixer sset "Stereo1 ADC MIXL ADC1" on
+amixer sset "Stereo1 ADC MIXR ADC1" on
+amixer sset "DAC1" 80%
+amixer sset "IN1 Boost" 80%
+amixer sset "IN2 Boost" 80%
+amixer sset "Mono ADC" 80%
