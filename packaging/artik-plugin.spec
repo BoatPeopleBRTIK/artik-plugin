@@ -97,8 +97,8 @@ mkdir -p %{buildroot}/etc
 cp %{_builddir}/%{name}-%{version}/release/%{TARGET}/artik_release %{buildroot}/etc
 
 # systemd module load service
-mkdir -p %{buildroot}/usr/lib/systemd/system
-cp %{_builddir}/%{name}-%{version}/systemd-modules-load.service %{buildroot}/usr/lib/systemd/system
+mkdir -p %{buildroot}/etc/systemd/system
+cp %{_builddir}/%{name}-%{version}/systemd-modules-load.service %{buildroot}/etc/systemd/system
 
 %post
 # Setting default runlevel to multi-user text mode
@@ -138,7 +138,7 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 %files
 %attr(0644,root,root) /etc/rpm/platform
 %attr(0644,root,root) /etc/artik_release
-%attr(0644,root,root) /usr/lib/systemd/system/systemd-modules-load.service
+%attr(0644,root,root) /etc/systemd/system/systemd-modules-load.service
 
 ###############################################################################
 # Bluetooth
@@ -183,7 +183,7 @@ Group:		System
 DHCP configuration
 
 %files network
-%attr(0644,root,root) /etc/sysconfig/network-scripts
+%attr(0644,root,root) /etc/sysconfig/network-scripts/ifcfg-eth0
 
 ###############################################################################
 # rfkill
@@ -305,7 +305,7 @@ californium
 %attr(0644,root,root) /opt/californium/lib/*.jar
 
 ###############################################################################
-#
+# leshan
 %package leshan
 Summary:	lwM2M leshan demonstration application
 Group:		Application

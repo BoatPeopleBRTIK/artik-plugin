@@ -19,3 +19,5 @@ Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/lib/systemd/systemd-modules-load
 
+[Install]
+WantedBy=sysinit.target
