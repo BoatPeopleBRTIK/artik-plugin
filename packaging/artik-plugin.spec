@@ -29,8 +29,10 @@ cp -rf %{_builddir}/%{name}-%{version}/platform %{buildroot}/etc/rpm
 
 # Bluetooth
 mkdir -p %{buildroot}/etc
-cp -r %{_builddir}/%{name}-%{version}/modules-load.d %{buildroot}/etc/
-cp -r %{_builddir}/%{name}-%{version}/modprobe.d %{buildroot}/etc/
+mkdir -p %{buildroot}/etc/modules-load.d
+cp %{_builddir}/%{name}-%{version}/modules-load.d/dhd.conf %{buildroot}/etc/modules-load.d
+mkdir -p %{buildroot}/etc/modprobe.d
+cp %{_builddir}/%{name}-%{version}/modprobe.d/dhd.conf %{buildroot}/etc/modprobe.d/
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp %{_builddir}/%{name}-%{version}/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
@@ -48,6 +50,10 @@ cp %{_builddir}/%{name}-%{version}/fstab/fstab-%{TARGET} %{buildroot}/etc/fstab
 # network
 mkdir -p %{buildroot}/etc/sysconfig/network-scripts
 cp %{_builddir}/%{name}-%{version}/network/ifcfg-eth0 %{buildroot}/etc/sysconfig/network-scripts
+
+if [ %{TARGET} = "artik5" ]; then
+cp %{_builddir}/%{name}-%{version}/modules-load.d/asix.conf %{buildroot}/etc/modules-load.d
+fi
 
 # rfkill
 mkdir -p %{buildroot}/usr/lib/systemd/system
@@ -180,10 +186,13 @@ Summary:    network
 Group:		System
 
 %description network
-DHCP configuration
+Network Driver and DHCP configuration
 
 %files network
 %attr(0644,root,root) /etc/sysconfig/network-scripts/ifcfg-eth0
+%if "%{TARGET}" == "artik5"
+%attr(0644,root,root) /etc/modules-load.d/asix.conf
+%endif
 
 ###############################################################################
 # rfkill
