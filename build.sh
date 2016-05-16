@@ -8,19 +8,14 @@ echo "build.sh [TARGET]"
 exit
 fi
 
-rm -rf ~/rpmbuild/*
+[ -d ~/rpmbuild/SOURCES ] || mkdir -p ~/rpmbuild/SOURCES
+[ -d ~/rpmbuild/RPMS ] || mkdir -p ~/rpmbuild/RPMS
+[ -d ~/rpmbuild/SRPMS ] || mkdir -p ~/rpmbuild/SRPMS
 
-mkdir ~/rpmbuild/BUILD
-mkdir ~/rpmbuild/BUILDROOT
-mkdir ~/rpmbuild/SOURCES
+name=artik-plugin
+version=`rpmspec --query --srpm --queryformat="%{version}" packaging/${name}.spec`
+buildname=${name}-${version}
 
-mkdir -p ./artik-plugin-0.1
-cp -rf ./prebuilt/* artik-plugin-0.1
-cp -rf ./units/* artik-plugin-0.1
-cp -rf ./scripts/* artik-plugin-0.1
-cp -rf ./configs/* artik-plugin-0.1
-cp -rf ./rules/* artik-plugin-0.1
+git archive --format=tar.gz --prefix=$buildname/ -o ~/rpmbuild/SOURCES/$buildname.tar.gz HEAD
 
-tar zcvf ~/rpmbuild/SOURCES/artik-plugin-0.1.tar.gz ./artik-plugin-0.1
-rm -rf artik-plugin-0.1
 rpmbuild --target=armv7hl -ba --define "TARGET $1" ./packaging/artik-plugin.spec

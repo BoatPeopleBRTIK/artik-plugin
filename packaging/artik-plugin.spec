@@ -24,91 +24,91 @@ rm -rf %{buildroot}
 
 # determine arch and OS for rpm
 mkdir -p %{buildroot}/etc/rpm
-cp -rf %{_builddir}/%{name}-%{version}/platform %{buildroot}/etc/rpm
+cp -f configs/platform %{buildroot}/etc/rpm
 
 # Bluetooth
 mkdir -p %{buildroot}/etc
 mkdir -p %{buildroot}/etc/modules-load.d
-cp %{_builddir}/%{name}-%{version}/modules-load.d/dhd.conf %{buildroot}/etc/modules-load.d
+cp configs/modules-load.d/dhd.conf %{buildroot}/etc/modules-load.d
 mkdir -p %{buildroot}/etc/modprobe.d
-cp %{_builddir}/%{name}-%{version}/modprobe.d/dhd.conf %{buildroot}/etc/modprobe.d/
+cp configs/modprobe.d/dhd.conf %{buildroot}/etc/modprobe.d/
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp %{_builddir}/%{name}-%{version}/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
+cp units/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/etc/udev/rules.d
-cp %{_builddir}/%{name}-%{version}/10-local.rules %{buildroot}/etc/udev/rules.d
+cp rules/10-local.rules %{buildroot}/etc/udev/rules.d
 
 mkdir -p  %{buildroot}/etc/bluetooth
-cp -r %{_builddir}/%{name}-%{version}/bluetooth/%{TARGET}/* %{buildroot}/etc/bluetooth
+cp -r prebuilt/bluetooth/%{TARGET}/* %{buildroot}/etc/bluetooth
 
 # fstab
 mkdir -p %{buildroot}/etc
-cp %{_builddir}/%{name}-%{version}/fstab/fstab-%{TARGET} %{buildroot}/etc/fstab
+cp prebuilt/fstab/fstab-%{TARGET} %{buildroot}/etc/fstab
 
 # network
 mkdir -p %{buildroot}/etc/sysconfig/network-scripts
-cp %{_builddir}/%{name}-%{version}/network/ifcfg-eth0 %{buildroot}/etc/sysconfig/network-scripts
+cp prebuilt/network/ifcfg-eth0 %{buildroot}/etc/sysconfig/network-scripts
 
 if [ %{TARGET} = "artik5" ]; then
-cp %{_builddir}/%{name}-%{version}/modules-load.d/asix.conf %{buildroot}/etc/modules-load.d
+cp configs/modules-load.d/asix.conf %{buildroot}/etc/modules-load.d
 fi
 
 # rfkill
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp %{_builddir}/%{name}-%{version}/rfkill-unblock.service %{buildroot}/usr/lib/systemd/system
+cp units/rfkill-unblock.service %{buildroot}/usr/lib/systemd/system
 
 # audio
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp %{_builddir}/%{name}-%{version}/pulseaudio.service %{buildroot}/usr/lib/systemd/system
-cp %{_builddir}/%{name}-%{version}/audiosetting.service %{buildroot}/usr/lib/systemd/system
+cp units/pulseaudio.service %{buildroot}/usr/lib/systemd/system
+cp units/audiosetting.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/usr/bin
-cp %{_builddir}/%{name}-%{version}/audio/%{TARGET}/audio_setting.sh %{buildroot}/usr/bin
+cp scripts/audio/%{TARGET}/audio_setting.sh %{buildroot}/usr/bin
 
 if [ %{TARGET} = "artik710" ]; then
 echo "target is artik710"
 mkdir -p %{buildroot}/usr/share/alsa
-cp %{_builddir}/%{name}-%{version}/audio/%{TARGET}/alsa.conf %{buildroot}/usr/share/alsa
+cp scripts/audio/%{TARGET}/alsa.conf %{buildroot}/usr/share/alsa
 fi
 
 # wifi
 mkdir -p %{buildroot}/etc/wifi
-cp %{_builddir}/%{name}-%{version}/wifi/%{TARGET}/* %{buildroot}/etc/wifi
+cp prebuilt/wifi/%{TARGET}/* %{buildroot}/etc/wifi
 
 # adbd
 mkdir -p %{buildroot}/usr/bin
-cp -r %{_builddir}/%{name}-%{version}/adbd/%{TARGET}/* %{buildroot}/usr/bin
-cp -r %{_builddir}/%{name}-%{version}/rndis/%{TARGET}/* %{buildroot}/usr/bin
+cp -r prebuilt/adbd/%{TARGET}/* %{buildroot}/usr/bin
+cp -r prebuilt/rndis/%{TARGET}/* %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp %{_builddir}/%{name}-%{version}/adbd.service %{buildroot}/usr/lib/systemd/system
-cp %{_builddir}/%{name}-%{version}/rndis.service %{buildroot}/usr/lib/systemd/system
+cp units/adbd.service %{buildroot}/usr/lib/systemd/system
+cp units/rndis.service %{buildroot}/usr/lib/systemd/system
 if [ %{TARGET} = "artik710" ]; then
-cp %{_builddir}/%{name}-%{version}/99-adb-restart.rules %{buildroot}/etc/udev/rules.d
+cp rules/99-adb-restart.rules %{buildroot}/etc/udev/rules.d
 fi
 
 # connman
-cp -r %{_builddir}/%{name}-%{version}/connman/* %{buildroot}
+cp -r prebuilt/connman/* %{buildroot}
 
 # Open JDK
 mkdir -p %{buildroot}/etc/profile.d
-cp %{_builddir}/%{name}-%{version}/open-jdk.sh %{buildroot}/etc/profile.d
+cp scripts/open-jdk.sh %{buildroot}/etc/profile.d
 
 # CoAP californium
 mkdir -p %{buildroot}/opt/californium
-cp -r %{_builddir}/%{name}-%{version}/californium/* %{buildroot}/opt/californium/
+cp -r prebuilt/californium/* %{buildroot}/opt/californium/
 
 # lwM2M leshan
 mkdir -p %{buildroot}/opt/leshan
-cp -r %{_builddir}/%{name}-%{version}/leshan/* %{buildroot}/opt/leshan/
+cp -r prebuilt/leshan/* %{buildroot}/opt/leshan/
 
 # artik_release
 mkdir -p %{buildroot}/etc
-cp %{_builddir}/%{name}-%{version}/release/%{TARGET}/artik_release %{buildroot}/etc
+cp scripts/release/%{TARGET}/artik_release %{buildroot}/etc
 
 # systemd module load service
 mkdir -p %{buildroot}/etc/systemd/system
-cp %{_builddir}/%{name}-%{version}/systemd-modules-load.service %{buildroot}/etc/systemd/system
+cp units/systemd-modules-load.service %{buildroot}/etc/systemd/system
 
 %post
 # Setting default runlevel to multi-user text mode
