@@ -10,7 +10,6 @@ Requires:       setup
 Requires:       pulseaudio
 Requires:       bluez
 Requires:       connman
-Requires:       mariadb
 
 Source0:	%{name}-%{version}.tar.gz
 
@@ -121,7 +120,6 @@ sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
 # Enable units
 systemctl enable systemd-timesyncd.service
 systemctl enable systemd-resolved.service
-systemctl enable mariadb.service
 
 # systemd module load service
 systemctl enable systemd-modules-load.service
