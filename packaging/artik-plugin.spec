@@ -79,8 +79,10 @@ cp %{_builddir}/%{name}-%{version}/wifi/%{TARGET}/* %{buildroot}/etc/wifi
 # adbd
 mkdir -p %{buildroot}/usr/bin
 cp -r %{_builddir}/%{name}-%{version}/adbd/%{TARGET}/* %{buildroot}/usr/bin
+cp -r %{_builddir}/%{name}-%{version}/rndis/%{TARGET}/* %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp %{_builddir}/%{name}-%{version}/adbd.service %{buildroot}/usr/lib/systemd/system
+cp %{_builddir}/%{name}-%{version}/rndis.service %{buildroot}/usr/lib/systemd/system
 if [ %{TARGET} = "artik710" ]; then
 cp %{_builddir}/%{name}-%{version}/99-adb-restart.rules %{buildroot}/etc/udev/rules.d
 fi
@@ -260,18 +262,20 @@ wifi
 /etc/wifi/*
 
 ###############################################################################
-# adbd
-%package adbd
-Summary:    adbd
+# usb gadget
+%package usb
+Summary:    usb
 Group:		System
 
-%description adbd
-adbd
+%description usb
+usb
 
-%files adbd
+%files usb
 %attr(0755,root,root) /usr/bin/adbd
 %attr(0755,root,root) /usr/bin/start_adbd.sh
+%attr(0755,root,root) /usr/bin/start_rndis.sh
 %attr(0644,root,root) /usr/lib/systemd/system/adbd.service
+%attr(0644,root,root) /usr/lib/systemd/system/rndis.service
 %if "%{TARGET}" == "artik710"
 %attr(0644,root,root) /etc/udev/rules.d/99-adb-restart.rules
 %endif
