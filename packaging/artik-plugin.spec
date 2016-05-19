@@ -1,3 +1,5 @@
+%define __jar_repack 0
+
 Name:		artik-plugin
 Summary:	ARTIK plugin files for fedora
 Version:	0.1
