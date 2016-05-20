@@ -1,13 +1,5 @@
 #!/bin/sh
 
-function gen_bluez_conf {
-cat > /etc/bluetooth/main.conf << EOF
-[General]
-Name = $1
-EOF
-	sync
-}
-
 function gen_bd_addr {
 	[ -d /opt/.bd_addr ] || rm -f /opt/.bd_addr
 
@@ -16,18 +8,6 @@ function gen_bd_addr {
 	chmod 400 /opt/.bd_addr
 	sync
 }
-
-ARTIK5=`cat /proc/cpuinfo | grep -i EXYNOS3`
-
-if [ "$ARTIK5" != "" ]; then
-	TTY_NUM=0
-	ARTIK_DEV=ARTIK5
-else
-	TTY_NUM=2
-	ARTIK_DEV=ARTIK10
-fi
-
-[ -d /etc/bluetooth/main.conf ] || gen_bluez_conf $ARTIK_DEV
 
 for x in $(cat /proc/cmdline); do
 	case $x in
