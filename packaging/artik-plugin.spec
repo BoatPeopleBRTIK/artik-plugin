@@ -112,6 +112,12 @@ cp scripts/release/%{TARGET}/artik_release %{buildroot}/etc
 mkdir -p %{buildroot}/etc/systemd/system
 cp units/systemd-modules-load.service %{buildroot}/etc/systemd/system
 
+# booting done service
+mkdir -p %{buildroot}/usr/bin
+cp scripts/booting-done.sh %{buildroot}/usr/bin
+mkdir -p %{buildroot}/usr/lib/systemd/system
+cp units/booting-done.service %{buildroot}/usr/lib/systemd/system
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -127,6 +133,7 @@ sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
 # Enable units
 systemctl enable systemd-timesyncd.service
 systemctl enable systemd-resolved.service
+systemctl enable booting-done.service
 
 # systemd module load service
 systemctl enable systemd-modules-load.service
@@ -150,6 +157,8 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 %attr(0644,root,root) /etc/rpm/platform
 %attr(0644,root,root) /etc/artik_release
 %attr(0644,root,root) /etc/systemd/system/systemd-modules-load.service
+%attr(0755,root,root) /usr/bin/booting-done.sh
+%attr(0644,root,root) /usr/lib/systemd/system/booting-done.service
 
 ###############################################################################
 # Bluetooth
