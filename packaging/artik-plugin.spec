@@ -12,6 +12,7 @@ Requires:       setup
 Requires:       pulseaudio
 Requires:       bluez
 Requires:       connman
+Requires:       dnsmasq
 
 Source0:	%{name}-%{version}.tar.gz
 
