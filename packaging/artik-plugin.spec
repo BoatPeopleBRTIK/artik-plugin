@@ -13,6 +13,7 @@ Requires:       pulseaudio
 Requires:       bluez
 Requires:       connman
 Requires:       dnsmasq
+Requires:       java-1.8.0-openjdk
 
 Source0:	%{name}-%{version}.tar.gz
 
@@ -167,6 +168,7 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 %package bluetooth
 Summary:    bluetooth
 Group:		System
+Requires:	bluez
 
 %description bluetooth
 Bluetooth
@@ -215,6 +217,7 @@ Network Driver and DHCP configuration
 %package rfkill
 Summary:    rfkill
 Group:		System
+Requires:       rfkill
 
 %description rfkill
 rfkill, unblock all
@@ -231,6 +234,7 @@ systemctl enable rfkill-unblock.service
 %package audio
 Summary:    audio
 Group:		System
+Requires:       pulseaudio
 
 %description audio
 audio
@@ -298,6 +302,7 @@ usb
 %package connman
 Summary:	connman
 Group:		System
+Requires:       connman
 
 %description connman
 connman
@@ -314,6 +319,7 @@ systemctl enable connman.service
 %package openjdk
 Summary:	openjdk
 Group:		System
+Requires:       java-1.8.0-openjdk
 
 %description openjdk
 Open JDK
