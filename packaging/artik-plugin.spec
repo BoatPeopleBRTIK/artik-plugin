@@ -44,6 +44,7 @@ cp rules/10-local.rules %{buildroot}/etc/udev/rules.d
 
 mkdir -p  %{buildroot}/etc/bluetooth
 cp -r prebuilt/bluetooth/%{TARGET}/* %{buildroot}/etc/bluetooth
+cp -r prebuilt/bluetooth/common/* %{buildroot}/etc/bluetooth
 
 # fstab
 mkdir -p %{buildroot}/etc
