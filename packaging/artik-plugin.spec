@@ -66,15 +66,12 @@ cp units/rfkill-unblock.service %{buildroot}/usr/lib/systemd/system
 # audio
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp units/pulseaudio.service %{buildroot}/usr/lib/systemd/system
-if [ %{TARGET} != "artik530" ]; then
 cp units/audiosetting.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/usr/bin
 cp scripts/audio/%{TARGET}/audio_setting.sh %{buildroot}/usr/bin
-fi
 
-if [ %{TARGET} = "artik710" ]; then
-echo "target is artik710"
+if [ %{TARGET} = "artik710" -o %{TARGET} = "artik530" ]; then
 mkdir -p %{buildroot}/usr/share/alsa
 cp scripts/audio/%{TARGET}/alsa.conf %{buildroot}/usr/share/alsa
 fi
@@ -262,12 +259,10 @@ sed -i '/<\/busconfig>/i \ \ <policy user="pulse">\n\ \ \ \ <allow send_destinat
 %files audio
 %attr(0644,root,root) /usr/lib/systemd/system/pulseaudio.service
 
-%if "%{TARGET}" != "artik530"
 %attr(0755,root,root) /usr/bin/audio_setting.sh
 %attr(0644,root,root) /usr/lib/systemd/system/audiosetting.service
-%endif
 
-%if "%{TARGET}" == "artik710"
+%if "%{TARGET}" == "artik710" || "%{TARGET}" == "artik530"
 %attr(0644,root,root) /usr/share/alsa/alsa.conf
 %endif
 
