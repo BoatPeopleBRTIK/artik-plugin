@@ -1,0 +1,10 @@
+[Unit]
+Description=Marvell BT/WiFi combo power on
+Before=wpa_supplicant.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "echo 1 > /sys/devices/platform/sd8x-rfkill/pwr_ctrl"
+
+[Install]
+WantedBy=multi-user.target

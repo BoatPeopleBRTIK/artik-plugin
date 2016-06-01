@@ -33,9 +33,15 @@ cp -f configs/platform %{buildroot}/etc/rpm
 # Bluetooth
 mkdir -p %{buildroot}/etc
 mkdir -p %{buildroot}/etc/modules-load.d
+if [ %{TARGET} = "artik530" ]; then
+cp configs/modules-load.d/mrvl.conf %{buildroot}/etc/modules-load.d
+mkdir -p %{buildroot}/usr/lib/systemd/system
+cp units/bt-wifi-on.service %{buildroot}/usr/lib/systemd/system
+else
 cp configs/modules-load.d/dhd.conf %{buildroot}/etc/modules-load.d
 mkdir -p %{buildroot}/etc/modprobe.d
 cp configs/modprobe.d/dhd.conf %{buildroot}/etc/modprobe.d/
+fi
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp units/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
@@ -175,10 +181,18 @@ Bluetooth
 %post bluetooth
 systemctl enable brcm-firmware.service
 systemctl enable bluetooth.service
+if [ %{TARGET} = "artik530" ]; then
+systemctl enable bt-wifi-on.service
+fi
 
 %files bluetooth
+%if "%{TARGET}" == "artik530"
+%attr(0644,root,root) /etc/modules-load.d/mrvl.conf
+%attr(0644,root,root) /usr/lib/systemd/system/bt-wifi-on.service
+%else
 %attr(0644,root,root) /etc/modules-load.d/dhd.conf
 %attr(0644,root,root) /etc/modprobe.d/dhd.conf
+%endif
 # auto-load bcm4354 bt firmware
 %attr(0644,root,root) /usr/lib/systemd/system/brcm-firmware.service
 %attr(0644,root,root) /etc/udev/rules.d/10-local.rules
