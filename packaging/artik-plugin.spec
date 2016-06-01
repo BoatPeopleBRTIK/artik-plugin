@@ -198,7 +198,7 @@ systemctl enable bt-wifi-on.service
 fi
 
 %files bluetooth
-%attr(0644,root,root) /etc/bluetooth/*
+/etc/bluetooth/*
 %if "%{TARGET}" == "artik530"
 %attr(0644,root,root) /etc/modules-load.d/mrvl.conf
 %attr(0644,root,root) /usr/lib/systemd/system/bt-wifi-on.service
