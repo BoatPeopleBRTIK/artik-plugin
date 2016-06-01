@@ -33,14 +33,20 @@ cp -f configs/platform %{buildroot}/etc/rpm
 # Bluetooth
 mkdir -p %{buildroot}/etc
 mkdir -p %{buildroot}/etc/modules-load.d
+mkdir -p %{buildroot}/etc/bluetooth
+
 if [ %{TARGET} = "artik530" ]; then
 cp configs/modules-load.d/mrvl.conf %{buildroot}/etc/modules-load.d
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp units/bt-wifi-on.service %{buildroot}/usr/lib/systemd/system
+mkdir -p  %{buildroot}/usr/lib/firmware/mrvl
+cp prebuilt/bluetooth/%{TARGET}/bt_cal_data.conf %{buildroot}/usr/lib/firmware/mrvl
+cp prebuilt/bluetooth/%{TARGET}/bt_init_cfg.conf %{buildroot}/usr/lib/firmware/mrvl
 else
 cp configs/modules-load.d/dhd.conf %{buildroot}/etc/modules-load.d
 mkdir -p %{buildroot}/etc/modprobe.d
 cp configs/modprobe.d/dhd.conf %{buildroot}/etc/modprobe.d/
+cp -r prebuilt/bluetooth/%{TARGET}/* %{buildroot}/etc/bluetooth
 fi
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
@@ -50,7 +56,6 @@ mkdir -p %{buildroot}/etc/udev/rules.d
 cp rules/10-local.rules %{buildroot}/etc/udev/rules.d
 
 mkdir -p  %{buildroot}/etc/bluetooth
-cp -r prebuilt/bluetooth/%{TARGET}/* %{buildroot}/etc/bluetooth
 cp -r prebuilt/bluetooth/common/* %{buildroot}/etc/bluetooth
 
 # fstab
@@ -83,8 +88,15 @@ cp scripts/audio/%{TARGET}/alsa.conf %{buildroot}/usr/share/alsa
 fi
 
 # wifi
+if [ %{TARGET} = "artik530" ]; then
+mkdir -p %{buildroot}/usr/lib/firmware/mrvl
+cp prebuilt/wifi/%{TARGET}/WlanCalData_ext.conf %{buildroot}/usr/lib/firmware/mrvl
+cp prebuilt/wifi/%{TARGET}/sdio8977_sdio_combo.bin %{buildroot}/usr/lib/firmware/mrvl
+cp prebuilt/wifi/%{TARGET}/sdsd8977_combo_v2.bin %{buildroot}/usr/lib/firmware/mrvl
+else
 mkdir -p %{buildroot}/etc/wifi
 cp prebuilt/wifi/%{TARGET}/* %{buildroot}/etc/wifi
+fi
 
 # adbd
 mkdir -p %{buildroot}/usr/bin
@@ -186,9 +198,12 @@ systemctl enable bt-wifi-on.service
 fi
 
 %files bluetooth
+%attr(0644,root,root) /etc/bluetooth/*
 %if "%{TARGET}" == "artik530"
 %attr(0644,root,root) /etc/modules-load.d/mrvl.conf
 %attr(0644,root,root) /usr/lib/systemd/system/bt-wifi-on.service
+%attr(0644,root,root) /usr/lib/firmware/mrvl/bt_cal_data.conf
+%attr(0644,root,root) /usr/lib/firmware/mrvl/bt_init_cfg.conf
 %else
 %attr(0644,root,root) /etc/modules-load.d/dhd.conf
 %attr(0644,root,root) /etc/modprobe.d/dhd.conf
@@ -196,7 +211,6 @@ fi
 # auto-load bcm4354 bt firmware
 %attr(0644,root,root) /usr/lib/systemd/system/brcm-firmware.service
 %attr(0644,root,root) /etc/udev/rules.d/10-local.rules
-/etc/bluetooth/*
 
 ###############################################################################
 # fstab
@@ -290,7 +304,13 @@ Group:		System
 wifi
 
 %files wifi
+%if "%{TARGET}" == "artik530"
+/usr/lib/firmware/mrvl/WlanCalData_ext.conf
+/usr/lib/firmware/mrvl/sdio8977_sdio_combo.bin
+/usr/lib/firmware/mrvl/sdsd8977_combo_v2.bin
+%else
 /etc/wifi/*
+%endif
 
 ###############################################################################
 # usb gadget
