@@ -66,6 +66,9 @@ cp prebuilt/fstab/fstab-%{TARGET} %{buildroot}/etc/fstab
 mkdir -p %{buildroot}/etc/sysconfig/network-scripts
 cp prebuilt/network/ifcfg-eth0 %{buildroot}/etc/sysconfig/network-scripts
 
+mkdir -p %{buildroot}/usr/bin
+cp prebuilt/network/zigbee_version %{buildroot}/usr/bin
+
 if [ %{TARGET} = "artik5" ]; then
 cp configs/modules-load.d/asix.conf %{buildroot}/etc/modules-load.d
 fi
@@ -235,6 +238,7 @@ Network Driver and DHCP configuration
 
 %files network
 %attr(0644,root,root) /etc/sysconfig/network-scripts/ifcfg-eth0
+%attr(0755,root,root) /usr/bin/zigbee_version
 %if "%{TARGET}" == "artik5"
 %attr(0644,root,root) /etc/modules-load.d/asix.conf
 %endif
