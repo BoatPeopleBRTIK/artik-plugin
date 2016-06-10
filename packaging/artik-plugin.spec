@@ -30,18 +30,12 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/etc/rpm
 cp -f configs/platform %{buildroot}/etc/rpm
 
-# Bluetooth
-mkdir -p %{buildroot}/etc
 mkdir -p %{buildroot}/etc/modules-load.d
-mkdir -p %{buildroot}/etc/bluetooth
 
 if [ %{TARGET} = "artik530" ]; then
 cp configs/modules-load.d/mrvl.conf %{buildroot}/etc/modules-load.d
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp units/bt-wifi-on.service %{buildroot}/usr/lib/systemd/system
-mkdir -p  %{buildroot}/usr/lib/firmware/mrvl
-cp prebuilt/bluetooth/%{TARGET}/bt_cal_data.conf %{buildroot}/usr/lib/firmware/mrvl
-cp prebuilt/bluetooth/%{TARGET}/bt_init_cfg.conf %{buildroot}/usr/lib/firmware/mrvl
 else
 cp configs/modules-load.d/dhd.conf %{buildroot}/etc/modules-load.d
 mkdir -p %{buildroot}/etc/modprobe.d
@@ -55,8 +49,10 @@ cp units/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
 mkdir -p %{buildroot}/etc/udev/rules.d
 cp rules/10-local.rules %{buildroot}/etc/udev/rules.d
 
+# bluetooth
 mkdir -p  %{buildroot}/etc/bluetooth
 cp -r prebuilt/bluetooth/common/* %{buildroot}/etc/bluetooth
+cp -r prebuilt/bluetooth/%{TARGET}/* %{buildroot}
 
 # fstab
 mkdir -p %{buildroot}/etc
