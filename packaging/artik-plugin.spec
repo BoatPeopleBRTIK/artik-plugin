@@ -28,26 +28,26 @@ rm -rf %{buildroot}
 
 # determine arch and OS for rpm
 mkdir -p %{buildroot}/etc/rpm
-cp -f configs/platform %{buildroot}/etc/rpm
+cp -f scripts/platform %{buildroot}/etc/rpm
 
 mkdir -p %{buildroot}/etc/modules-load.d
-cp configs/modules-load.d/* %{buildroot}/etc/modules-load.d
+cp scripts/modules-load.d/* %{buildroot}/etc/modules-load.d
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp units/bt-wifi-on.service %{buildroot}/usr/lib/systemd/system
+cp scripts/units/bt-wifi-on.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/etc/modprobe.d
-cp configs/modprobe.d/dhd.conf %{buildroot}/etc/modprobe.d/
+cp scripts/modprobe.d/dhd.conf %{buildroot}/etc/modprobe.d/
 
 mkdir -p  %{buildroot}/etc/bluetooth
 cp -r prebuilt/bluetooth/* %{buildroot}/etc/bluetooth
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp units/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
-cp units/rfkill-unblock.service %{buildroot}/usr/lib/systemd/system
+cp scripts/units/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
+cp scripts/units/rfkill-unblock.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/etc/udev/rules.d
-cp rules/10-local.rules %{buildroot}/etc/udev/rules.d
+cp scripts/rules/10-local.rules %{buildroot}/etc/udev/rules.d
 
 mkdir -p %{buildroot}/etc/profile.d
 cp scripts/open-jdk.sh %{buildroot}/etc/profile.d
@@ -67,11 +67,11 @@ cp -r prebuilt/connman/* %{buildroot}
 
 # audio
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp units/pulseaudio.service %{buildroot}/usr/lib/systemd/system
-cp units/audiosetting.service %{buildroot}/usr/lib/systemd/system
+cp scripts/units/pulseaudio.service %{buildroot}/usr/lib/systemd/system
+cp scripts/units/audiosetting.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/usr/share/alsa
-cp -r scripts/audio/* %{buildroot}/usr/bin
+cp -r prebuilt/audio/* %{buildroot}/usr/bin
 
 # wifi
 mkdir -p %{buildroot}/etc/wifi
@@ -82,9 +82,9 @@ mkdir -p %{buildroot}/usr/bin
 cp -r prebuilt/adbd/%{TARGET}/* %{buildroot}/usr/bin
 cp -r prebuilt/rndis/%{TARGET}/* %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp units/adbd.service %{buildroot}/usr/lib/systemd/system
-cp units/rndis.service %{buildroot}/usr/lib/systemd/system
-cp rules/99-adb-restart.rules %{buildroot}/etc/udev/rules.d
+cp scripts/units/adbd.service %{buildroot}/usr/lib/systemd/system
+cp scripts/units/rndis.service %{buildroot}/usr/lib/systemd/system
+cp scripts/rules/99-adb-restart.rules %{buildroot}/etc/udev/rules.d
 
 # CoAP californium
 mkdir -p %{buildroot}/opt/californium
@@ -100,13 +100,13 @@ cp scripts/release/%{TARGET}/artik_release %{buildroot}/etc
 
 # systemd module load service
 mkdir -p %{buildroot}/etc/systemd/system
-cp units/systemd-modules-load.service %{buildroot}/etc/systemd/system
+cp scripts/units/systemd-modules-load.service %{buildroot}/etc/systemd/system
 
 # booting done service
 mkdir -p %{buildroot}/usr/bin
 cp scripts/booting-done.sh %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp units/booting-done.service %{buildroot}/usr/lib/systemd/system
+cp scripts/units/booting-done.service %{buildroot}/usr/lib/systemd/system
 
 %post
 # Setting default runlevel to multi-user text mode
