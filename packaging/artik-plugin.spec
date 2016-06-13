@@ -45,9 +45,13 @@ fi
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp units/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
+cp units/rfkill-unblock.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/etc/udev/rules.d
 cp rules/10-local.rules %{buildroot}/etc/udev/rules.d
+
+mkdir -p %{buildroot}/etc/profile.d
+cp scripts/open-jdk.sh %{buildroot}/etc/profile.d
 
 # bluetooth
 mkdir -p  %{buildroot}/etc/bluetooth
@@ -69,9 +73,7 @@ if [ %{TARGET} = "artik5" ]; then
 cp configs/modules-load.d/asix.conf %{buildroot}/etc/modules-load.d
 fi
 
-# rfkill
-mkdir -p %{buildroot}/usr/lib/systemd/system
-cp units/rfkill-unblock.service %{buildroot}/usr/lib/systemd/system
+cp -r prebuilt/connman/* %{buildroot}
 
 # audio
 mkdir -p %{buildroot}/usr/lib/systemd/system
@@ -104,16 +106,7 @@ cp -r prebuilt/rndis/%{TARGET}/* %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp units/adbd.service %{buildroot}/usr/lib/systemd/system
 cp units/rndis.service %{buildroot}/usr/lib/systemd/system
-if [ %{TARGET} = "artik710" ]; then
 cp rules/99-adb-restart.rules %{buildroot}/etc/udev/rules.d
-fi
-
-# connman
-cp -r prebuilt/connman/* %{buildroot}
-
-# Open JDK
-mkdir -p %{buildroot}/etc/profile.d
-cp scripts/open-jdk.sh %{buildroot}/etc/profile.d
 
 # CoAP californium
 mkdir -p %{buildroot}/opt/californium
@@ -153,6 +146,7 @@ sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
 systemctl enable systemd-timesyncd.service
 systemctl enable systemd-resolved.service
 systemctl enable booting-done.service
+systemctl enable rfkill-unblock.service
 
 # systemd module load service
 systemctl enable systemd-modules-load.service
@@ -172,12 +166,20 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 
 ###############################################################################
 # artik-plugin
+
 %files
 %attr(0644,root,root) /etc/rpm/platform
 %attr(0644,root,root) /etc/artik_release
 %attr(0644,root,root) /etc/systemd/system/systemd-modules-load.service
 %attr(0755,root,root) /usr/bin/booting-done.sh
 %attr(0644,root,root) /usr/lib/systemd/system/booting-done.service
+%attr(0644,root,root) /etc/profile.d/open-jdk.sh
+%attr(0644,root,root) /usr/lib/systemd/system/rfkill-unblock.service
+
+%attr(0755,root,root) /opt/californium/*.jar
+%attr(0644,root,root) /opt/californium/lib/*.jar
+%attr(0755,root,root) /opt/leshan/*.jar
+%attr(0644,root,root) /opt/leshan/lib/*.jar
 
 ###############################################################################
 # Bluetooth
@@ -232,29 +234,17 @@ Group:		System
 %description network
 Network Driver and DHCP configuration
 
+%post network
+systemctl enable connman.service
+
 %files network
 %attr(0644,root,root) /etc/sysconfig/network-scripts/ifcfg-eth0
 %attr(0755,root,root) /usr/bin/zigbee_version
 %if "%{TARGET}" == "artik5"
 %attr(0644,root,root) /etc/modules-load.d/asix.conf
 %endif
-
-###############################################################################
-# rfkill
-%package rfkill
-Summary:    rfkill
-Group:		System
-Requires:       rfkill
-
-%description rfkill
-rfkill, unblock all
-
-%post rfkill
-systemctl daemon-reload
-systemctl enable rfkill-unblock.service
-
-%files rfkill
-%attr(0644,root,root) /usr/lib/systemd/system/rfkill-unblock.service
+%attr(0644,root,root) /etc/connman/main.conf
+%attr(0644,root,root) /var/lib/connman/settings
 
 ###############################################################################
 # audio
@@ -327,62 +317,4 @@ usb
 %attr(0755,root,root) /usr/bin/start_rndis.sh
 %attr(0644,root,root) /usr/lib/systemd/system/adbd.service
 %attr(0644,root,root) /usr/lib/systemd/system/rndis.service
-%if "%{TARGET}" == "artik710"
 %attr(0644,root,root) /etc/udev/rules.d/99-adb-restart.rules
-%endif
-
-###############################################################################
-# connman
-%package connman
-Summary:	connman
-Group:		System
-Requires:       connman
-
-%description connman
-connman
-
-%post connman
-systemctl enable connman.service
-
-%files connman
-%attr(0644,root,root) /etc/connman/main.conf
-%attr(0644,root,root) /var/lib/connman/settings
-
-###############################################################################
-# Open JDK
-%package openjdk
-Summary:	openjdk
-Group:		System
-Requires:       java-1.8.0-openjdk
-
-%description openjdk
-Open JDK
-
-%files openjdk
-%attr(0644,root,root) /etc/profile.d/open-jdk.sh
-
-###############################################################################
-# californium
-%package californium
-Summary:	CoAP californium demonstration application
-Group:		Application
-
-%description californium
-californium
-
-%files californium
-%attr(0755,root,root) /opt/californium/*.jar
-%attr(0644,root,root) /opt/californium/lib/*.jar
-
-###############################################################################
-# leshan
-%package leshan
-Summary:	lwM2M leshan demonstration application
-Group:		Application
-
-%description leshan
-leshan
-
-%files leshan
-%attr(0755,root,root) /opt/leshan/*.jar
-%attr(0644,root,root) /opt/leshan/lib/*.jar
