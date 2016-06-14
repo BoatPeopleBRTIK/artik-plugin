@@ -173,7 +173,7 @@ Bluetooth
 %post bluetooth-common
 systemctl enable bluetooth.service
 
-mv /etc/bluetooth/common/* /etc/bluetooth/*
+\cp -rf /etc/bluetooth/common/* /etc/bluetooth/*
 rm -r /etc/bluetooth/common
 
 %files bluetooth-common
@@ -193,7 +193,7 @@ Bluetooth
 systemctl enable brcm-firmware.service
 systemctl enable bluetooth.service
 
-mv /etc/bluetooth/artik5/* /
+\cp -rf /etc/bluetooth/artik5/* /
 rm -r /etc/bluetooth/artik5
 
 %files bluetooth-artik5
@@ -215,7 +215,7 @@ Bluetooth
 systemctl enable brcm-firmware.service
 systemctl enable bluetooth.service
 
-mv /etc/bluetooth/artik10/* /
+\cp -rf /etc/bluetooth/artik10/* /
 rm -r /etc/bluetooth/artik10
 
 %files bluetooth-artik10
@@ -237,7 +237,7 @@ Bluetooth
 systemctl enable bluetooth.service
 systemctl enable bt-wifi-on.service
 
-mv /etc/bluetooth/artik530/* /
+\cp -rf /etc/bluetooth/artik530/* /
 rm -r /etc/bluetooth/artik530
 
 %files bluetooth-artik530
@@ -258,7 +258,7 @@ Bluetooth
 systemctl enable brcm-firmware.service
 systemctl enable bluetooth.service
 
-mv /etc/bluetooth/artik710/* /
+\cp -rf /etc/bluetooth/artik710/* /
 rm -r /etc/bluetooth/artik710
 
 %files bluetooth-artik710
@@ -400,7 +400,7 @@ Requires:       pulseaudio
 audio
 
 %post audio-artik5
-rm /usr/bin/audio_setting.sh
+rm -f /usr/bin/audio_setting.sh
 mv /usr/bin/artik5/audio_setting.sh /usr/bin
 rm -r /usr/bin/artik5
 
@@ -417,7 +417,7 @@ Requires:       pulseaudio
 audio
 
 %post audio-artik10
-rm /usr/bin/audio_setting.sh
+rm -f /usr/bin/audio_setting.sh
 mv /usr/bin/artik10/audio_setting.sh /usr/bin
 rm -r /usr/bin/artik10
 
@@ -434,7 +434,8 @@ Requires:       pulseaudio
 audio
 
 %post audio-artik530
-rm /usr/bin/audio_setting.sh
+rm -f /usr/bin/audio_setting.sh
+rm -f /usr/share/alsa/alsa.conf
 mv /usr/bin/artik530/audio_setting.sh /usr/bin
 mv /usr/bin/artik530/alsa.conf /usr/share/alsa
 rm -r /usr/bin/artik530
@@ -453,7 +454,8 @@ Requires:       pulseaudio
 audio
 
 %post audio-artik710
-rm /usr/bin/audio_setting.sh
+rm -f /usr/bin/audio_setting.sh
+rm -f /usr/share/alsa/alsa.conf
 mv /usr/bin/artik710/audio_setting.sh /usr/bin
 mv /usr/bin/artik710/alsa.conf /usr/share/alsa
 rm -r /usr/bin/artik710
@@ -473,8 +475,8 @@ Group:		System
 wifi
 
 %post wifi-artik5
-mv /etc/wifi/artik5/* /etc/wifi
-rm -r /etc/wifi/artik10
+\cp -rf /etc/wifi/artik5/* /etc/wifi
+rm -r /etc/wifi/artik5
 
 %files wifi-artik5
 /etc/wifi/artik5/*
@@ -488,7 +490,7 @@ Group:		System
 wifi
 
 %post wifi-artik10
-mv /etc/wifi/artik10/* /etc/wifi
+\cp -rf /etc/wifi/artik10/* /etc/wifi
 rm -r /etc/wifi/artik10
 
 %files wifi-artik10
@@ -504,7 +506,7 @@ wifi
 
 %post wifi-artik530
 mkdir -p /usr/lib/firmware
-mv /etc/wifi/artik530/* /usr/lib/firmware
+\cp -rf /etc/wifi/artik530/* /usr/lib/firmware
 rm -r /etc/wifi/artik530
 
 %files wifi-artik530
@@ -519,7 +521,7 @@ Group:		System
 wifi
 
 %post wifi-artik710
-mv /etc/wifi/artik710/* /etc/wifi
+\cp -rf /etc/wifi/artik710/* /etc/wifi
 rm -r /etc/wifi/artik710
 
 %files wifi-artik710
