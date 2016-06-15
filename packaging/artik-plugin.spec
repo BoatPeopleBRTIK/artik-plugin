@@ -381,10 +381,7 @@ cp /etc/pulse/default.pa /etc/pulse/system.pa
 /usr/sbin/usermod -a -G audio pulse
 
 # pulseaudio settings for bluetooth a2dp_sink
-set -i '/<allow own="org.pulseaudio.Server"\/>/a \ \ \ \ <allow send_interface="org.freedesktop.DBus.ObjectManager"/>' /etc/dbus-1/system.d/pulseaudio-system.conf
 sed -i '/<allow own="org.pulseaudio.Server"\/>/a \ \ \ \ <allow send_destination="org.bluez"/>' /etc/dbus-1/system.d/pulseaudio-system.conf
-
-sed -i '/<\/busconfig>/i \ \ <policy user="pulse">\n\ \ \ \ <allow send_destination="org.bluez"/>\n\ \ \ \ <allow send_interface="org.freedesktop.DBus.ObjectManager"/>\n\ \ <\/policy>\n'  /etc/dbus-1/system.d/bluetooth.conf
 
 %files audio-common
 %attr(0644,root,root) /usr/lib/systemd/system/pulseaudio.service
