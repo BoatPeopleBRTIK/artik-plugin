@@ -1,6 +1,7 @@
 #!/bin/sh
 
 GADGET_DIR=/sys/kernel/config/usb_gadget/g1
+SERIAL_PATH=/proc/device-tree/serial-number
 
 #Mount ConfigFS and create Gadget
 if ! [ -d "${GADGET_DIR}" ]; then
@@ -15,7 +16,13 @@ echo 0x0001 > ${GADGET_DIR}/idProduct
 if ! [ -d "${GADGET_DIR}/strings/0x409" ]; then
 	mkdir ${GADGET_DIR}/strings/0x409
 fi
-echo 0123456789 > ${GADGET_DIR}/strings/0x409/serialnumber
+
+#Set serial number
+if [ -f ${SERIAL_PATH} ]; then
+	cat ${SERIAL_PATH} > ${GADGET_DIR}/strings/0x409/serialnumber
+else
+	echo ARTIK > ${GADGET_DIR}/strings/0x409/serialnumber
+fi
 echo Samsung > ${GADGET_DIR}/strings/0x409/manufacturer
 echo Artik > ${GADGET_DIR}/strings/0x409/product
 
