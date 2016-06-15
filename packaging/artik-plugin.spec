@@ -30,20 +30,10 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/etc/rpm
 cp -f scripts/platform %{buildroot}/etc/rpm
 
-mkdir -p %{buildroot}/etc/modules-load.d
-cp scripts/modules-load.d/* %{buildroot}/etc/modules-load.d
-
-mkdir -p %{buildroot}/usr/lib/systemd/system
-cp scripts/units/bt-wifi-on.service %{buildroot}/usr/lib/systemd/system
-
-mkdir -p %{buildroot}/etc/modprobe.d
-cp scripts/modprobe.d/dhd.conf %{buildroot}/etc/modprobe.d/
-
 mkdir -p  %{buildroot}/etc/bluetooth
-cp -r prebuilt/bluetooth/* %{buildroot}/etc/bluetooth
+cp -r prebuilt/bluetooth/common/* %{buildroot}/etc/bluetooth
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
-cp scripts/units/brcm-firmware.service %{buildroot}/usr/lib/systemd/system
 cp scripts/units/rfkill-unblock.service %{buildroot}/usr/lib/systemd/system
 
 mkdir -p %{buildroot}/etc/udev/rules.d
@@ -51,10 +41,6 @@ cp scripts/rules/10-local.rules %{buildroot}/etc/udev/rules.d
 
 mkdir -p %{buildroot}/etc/profile.d
 cp scripts/open-jdk.sh %{buildroot}/etc/profile.d
-
-# fstab
-mkdir -p %{buildroot}/etc
-cp prebuilt/fstab/fstab-* %{buildroot}/etc/
 
 # network
 mkdir -p %{buildroot}/etc/sysconfig/network-scripts
@@ -70,17 +56,10 @@ mkdir -p %{buildroot}/usr/lib/systemd/system
 cp scripts/units/pulseaudio.service %{buildroot}/usr/lib/systemd/system
 cp scripts/units/audiosetting.service %{buildroot}/usr/lib/systemd/system
 
-mkdir -p %{buildroot}/usr/share/alsa
-cp -r prebuilt/audio/* %{buildroot}/usr/bin
-
-# wifi
-mkdir -p %{buildroot}/etc/wifi
-cp -r prebuilt/wifi/* %{buildroot}/etc/wifi
-
 # adbd
 mkdir -p %{buildroot}/usr/bin
-cp -r prebuilt/adbd/%{TARGET}/* %{buildroot}/usr/bin
-cp -r prebuilt/rndis/%{TARGET}/* %{buildroot}/usr/bin
+cp prebuilt/adbd/adbd %{buildroot}/usr/bin
+
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp scripts/units/adbd.service %{buildroot}/usr/lib/systemd/system
 cp scripts/units/rndis.service %{buildroot}/usr/lib/systemd/system
@@ -168,161 +147,9 @@ Bluetooth
 %post bluetooth-common
 systemctl enable bluetooth.service
 
-\cp -rf /etc/bluetooth/common/* /etc/bluetooth/*
-rm -r /etc/bluetooth/common
-
 %files bluetooth-common
 %attr(0644,root,root) /etc/udev/rules.d/10-local.rules
-/etc/bluetooth/common
-
-# ARTIK5
-%package bluetooth-artik5
-Summary:    bluetooth
-Group:		System
-Requires:	bluez
-
-%description bluetooth-artik5
-Bluetooth
-
-%post bluetooth-artik5
-systemctl enable brcm-firmware.service
-systemctl enable bluetooth.service
-
-\cp -rf /etc/bluetooth/artik5/* /
-rm -r /etc/bluetooth/artik5
-
-%files bluetooth-artik5
-%attr(0644,root,root) /etc/modules-load.d/dhd.conf
-%attr(0644,root,root) /etc/modprobe.d/dhd.conf
-%attr(0644,root,root) /usr/lib/systemd/system/brcm-firmware.service
-/etc/bluetooth/artik5/*
-
-# ARTIK10
-%package bluetooth-artik10
-Summary:    bluetooth
-Group:		System
-Requires:	bluez
-
-%description bluetooth-artik10
-Bluetooth
-
-%post bluetooth-artik10
-systemctl enable brcm-firmware.service
-systemctl enable bluetooth.service
-
-\cp -rf /etc/bluetooth/artik10/* /
-rm -r /etc/bluetooth/artik10
-
-%files bluetooth-artik10
-%attr(0644,root,root) /etc/modules-load.d/dhd.conf
-%attr(0644,root,root) /etc/modprobe.d/dhd.conf
-%attr(0644,root,root) /usr/lib/systemd/system/brcm-firmware.service
-/etc/bluetooth/artik10/*
-
-# ARTIK530
-%package bluetooth-artik530
-Summary:    bluetooth
-Group:		System
-Requires:	bluez
-
-%description bluetooth-artik530
-Bluetooth
-
-%post bluetooth-artik530
-systemctl enable bluetooth.service
-systemctl enable bt-wifi-on.service
-
-\cp -rf /etc/bluetooth/artik530/* /
-rm -r /etc/bluetooth/artik530
-
-%files bluetooth-artik530
-%attr(0644,root,root) /etc/modules-load.d/mrvl.conf
-%attr(0644,root,root) /usr/lib/systemd/system/bt-wifi-on.service
-/etc/bluetooth/artik530/*
-
-# ARTIK710
-%package bluetooth-artik710
-Summary:    bluetooth
-Group:		System
-Requires:	bluez
-
-%description bluetooth-artik710
-Bluetooth
-
-%post bluetooth-artik710
-systemctl enable brcm-firmware.service
-systemctl enable bluetooth.service
-
-\cp -rf /etc/bluetooth/artik710/* /
-rm -r /etc/bluetooth/artik710
-
-%files bluetooth-artik710
-%attr(0644,root,root) /etc/modules-load.d/dhd.conf
-%attr(0644,root,root) /etc/modprobe.d/dhd.conf
-%attr(0644,root,root) /usr/lib/systemd/system/brcm-firmware.service
-/etc/bluetooth/artik710/*
-
-###############################################################################
-# fstab
-# ARTIK5
-%package fstab-artik5
-Summary:    fstab
-Group:		System
-
-%description fstab-artik5
-fstab
-
-%post fstab-artik5
-rm -f /etc/fstab
-mv /etc/fstab-%{TARGET} /etc/fstab
-
-%files fstab-artik5
-%attr(0644,root,root) /etc/fstab-artik5
-
-# ARTIK10
-%package fstab-artik10
-Summary:    fstab
-Group:		System
-
-%description fstab-artik10
-fstab
-
-%post fstab-artik10
-rm -f /etc/fstab
-mv /etc/fstab-%{TARGET} /etc/fstab
-
-%files fstab-artik10
-%attr(0644,root,root) /etc/fstab-artik10
-
-# ARTIK530
-%package fstab-artik530
-Summary:    fstab
-Group:		System
-
-%description fstab-artik530
-fstab
-
-%post fstab-artik530
-rm -f /etc/fstab
-mv /etc/fstab-%{TARGET} /etc/fstab
-
-%files fstab-artik530
-%attr(0644,root,root) /etc/fstab-artik530
-
-# ARTIK710
-%package fstab-artik710
-Summary:    fstab
-Group:		System
-
-%description fstab-artik710
-fstab
-
-%post fstab-artik710
-rm -f /etc/fstab
-mv /etc/fstab-%{TARGET} /etc/fstab
-
-%files fstab-artik710
-%attr(0644,root,root) /etc/fstab-artik710
+/etc/bluetooth/*
 
 ###############################################################################
 # network
@@ -343,16 +170,6 @@ systemctl enable connman.service
 %attr(0644,root,root) /etc/connman/main.conf
 %attr(0644,root,root) /var/lib/connman/settings
 
-# ARTIK5
-%package network-artik5
-Summary:    network
-Group:		System
-
-%description network-artik5
-Network Driver and DHCP configuration
-
-%files network-artik5
-%attr(0644,root,root) /etc/modules-load.d/asix.conf
 ###############################################################################
 # audio
 # ARTIK common
@@ -382,142 +199,6 @@ sed -i '/<allow own="org.pulseaudio.Server"\/>/a \ \ \ \ <allow send_destination
 %attr(0644,root,root) /usr/lib/systemd/system/pulseaudio.service
 %attr(0644,root,root) /usr/lib/systemd/system/audiosetting.service
 
-# ARTIK5
-%package audio-artik5
-Summary:    audio
-Group:		System
-Requires:       pulseaudio
-
-%description audio-artik5
-audio
-
-%post audio-artik5
-rm -f /usr/bin/audio_setting.sh
-mv /usr/bin/artik5/audio_setting.sh /usr/bin
-rm -r /usr/bin/artik5
-
-%files audio-artik5
-%attr(0755,root,root) /usr/bin/artik5/audio_setting.sh
-
-# ARTIK10
-%package audio-artik10
-Summary:    audio
-Group:		System
-Requires:       pulseaudio
-
-%description audio-artik10
-audio
-
-%post audio-artik10
-rm -f /usr/bin/audio_setting.sh
-mv /usr/bin/artik10/audio_setting.sh /usr/bin
-rm -r /usr/bin/artik10
-
-%files audio-artik10
-%attr(0755,root,root) /usr/bin/artik10/audio_setting.sh
-
-# ARTIK530
-%package audio-artik530
-Summary:    audio
-Group:		System
-Requires:       pulseaudio
-
-%description audio-artik530
-audio
-
-%post audio-artik530
-rm -f /usr/bin/audio_setting.sh
-rm -f /usr/share/alsa/alsa.conf
-mv /usr/bin/artik530/audio_setting.sh /usr/bin
-mv /usr/bin/artik530/alsa.conf /usr/share/alsa
-rm -r /usr/bin/artik530
-
-%files audio-artik530
-%attr(0755,root,root) /usr/bin/artik530/audio_setting.sh
-%attr(0644,root,root) /usr/bin/artik530/alsa.conf
-
-# ARTIK710
-%package audio-artik710
-Summary:    audio
-Group:		System
-Requires:       pulseaudio
-
-%description audio-artik710
-audio
-
-%post audio-artik710
-rm -f /usr/bin/audio_setting.sh
-rm -f /usr/share/alsa/alsa.conf
-mv /usr/bin/artik710/audio_setting.sh /usr/bin
-mv /usr/bin/artik710/alsa.conf /usr/share/alsa
-rm -r /usr/bin/artik710
-
-%files audio-artik710
-%attr(0755,root,root) /usr/bin/artik710/audio_setting.sh
-%attr(0644,root,root) /usr/bin/artik710/alsa.conf
-
-###############################################################################
-# Wifi
-# ARTIK5
-%package wifi-artik5
-Summary:    wifi
-Group:		System
-
-%description wifi-artik5
-wifi
-
-%post wifi-artik5
-\cp -rf /etc/wifi/artik5/* /etc/wifi
-rm -r /etc/wifi/artik5
-
-%files wifi-artik5
-/etc/wifi/artik5/*
-
-# ARTIK10
-%package wifi-artik10
-Summary:    wifi
-Group:		System
-
-%description wifi-artik10
-wifi
-
-%post wifi-artik10
-\cp -rf /etc/wifi/artik10/* /etc/wifi
-rm -r /etc/wifi/artik10
-
-%files wifi-artik10
-/etc/wifi/artik10/*
-
-# ARTIK530
-%package wifi-artik530
-Summary:    wifi
-Group:		System
-
-%description wifi-artik530
-wifi
-
-%post wifi-artik530
-mkdir -p /usr/lib/firmware
-\cp -rf /etc/wifi/artik530/* /usr/lib/firmware
-rm -r /etc/wifi/artik530
-
-%files wifi-artik530
-/etc/wifi/artik530/*
-
-# ARTIK710
-%package wifi-artik710
-Summary:    wifi
-Group:		System
-
-%description wifi-artik710
-wifi
-
-%post wifi-artik710
-\cp -rf /etc/wifi/artik710/* /etc/wifi
-rm -r /etc/wifi/artik710
-
-%files wifi-artik710
-/etc/wifi/artik710/*
 ###############################################################################
 # usb gadget
 %package usb-common
@@ -529,8 +210,6 @@ usb
 
 %files usb-common
 %attr(0755,root,root) /usr/bin/adbd
-%attr(0755,root,root) /usr/bin/start_adbd.sh
-%attr(0755,root,root) /usr/bin/start_rndis.sh
 %attr(0644,root,root) /usr/lib/systemd/system/adbd.service
 %attr(0644,root,root) /usr/lib/systemd/system/rndis.service
 %attr(0644,root,root) /etc/udev/rules.d/99-adb-restart.rules
