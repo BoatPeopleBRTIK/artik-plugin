@@ -94,10 +94,6 @@ cp -r prebuilt/californium/* %{buildroot}/opt/californium/
 mkdir -p %{buildroot}/opt/leshan
 cp -r prebuilt/leshan/* %{buildroot}/opt/leshan/
 
-# artik_release
-mkdir -p %{buildroot}/etc
-cp scripts/release/%{TARGET}/artik_release %{buildroot}/etc
-
 # systemd module load service
 mkdir -p %{buildroot}/etc/systemd/system
 cp scripts/units/systemd-modules-load.service %{buildroot}/etc/systemd/system
@@ -147,7 +143,6 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 
 %files
 %attr(0644,root,root) /etc/rpm/platform
-%attr(0644,root,root) /etc/artik_release
 %attr(0644,root,root) /etc/systemd/system/systemd-modules-load.service
 %attr(0755,root,root) /usr/bin/booting-done.sh
 %attr(0644,root,root) /usr/lib/systemd/system/booting-done.service
