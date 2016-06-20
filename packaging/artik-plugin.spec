@@ -49,6 +49,9 @@ cp prebuilt/network/ifcfg-eth0 %{buildroot}/etc/sysconfig/network-scripts
 mkdir -p %{buildroot}/usr/bin
 cp prebuilt/network/zigbee_version %{buildroot}/usr/bin
 
+mkdir -p %{buildroot}/etc/modules-load.d
+cp scripts/modules-load.d/tun.conf %{buildroot}/etc/modules-load.d/
+
 cp -r prebuilt/connman/* %{buildroot}
 
 # audio
@@ -169,6 +172,7 @@ systemctl enable connman.service
 %attr(0755,root,root) /usr/bin/zigbee_version
 %attr(0644,root,root) /etc/connman/main.conf
 %attr(0644,root,root) /var/lib/connman/settings
+%attr(0644,root,root) /etc/modules-load.d/tun.conf
 
 ###############################################################################
 # audio
