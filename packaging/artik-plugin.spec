@@ -101,6 +101,9 @@ sed -i "s/#SystemMaxUse=/SystemMaxUse=10M/" /etc/systemd/journald.conf
 sed -i 's/INTERFACES=\"\"/INTERFACES=\"-iwlan0\"/g' /etc/sysconfig/wpa_supplicant
 sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
 
+# ignore power key action
+sed -i "s/#HandlePowerKey=poweroff/HandlePowerKey=ignore/" /etc/systemd/logind.conf
+
 # Enable units
 systemctl enable systemd-timesyncd.service
 systemctl enable systemd-resolved.service
