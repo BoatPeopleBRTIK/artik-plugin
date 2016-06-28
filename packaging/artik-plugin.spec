@@ -46,9 +46,6 @@ cp scripts/open-jdk.sh %{buildroot}/etc/profile.d
 mkdir -p %{buildroot}/etc/sysconfig/network-scripts
 cp prebuilt/network/ifcfg-eth0 %{buildroot}/etc/sysconfig/network-scripts
 
-mkdir -p %{buildroot}/usr/bin
-cp prebuilt/network/zigbee_version %{buildroot}/usr/bin
-
 mkdir -p %{buildroot}/etc/modules-load.d
 cp scripts/modules-load.d/tun.conf %{buildroot}/etc/modules-load.d/
 
@@ -85,6 +82,12 @@ mkdir -p %{buildroot}/usr/bin
 cp scripts/booting-done.sh %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp scripts/units/booting-done.service %{buildroot}/usr/lib/systemd/system
+
+# zigbee
+cp -r prebuilt/zigbee/usr %{buildroot}
+mkdir -p %{buildroot}/etc/systemd/system
+cp scripts/units/zigbee-daemon.service %{buildroot}/usr/lib/systemd/system
+cp scripts/units/zigbee-pre.service %{buildroot}/usr/lib/systemd/system
 
 %post
 # Setting default runlevel to multi-user text mode
@@ -169,7 +172,6 @@ systemctl enable connman.service
 
 %files network-common
 %attr(0644,root,root) /etc/sysconfig/network-scripts/ifcfg-eth0
-%attr(0755,root,root) /usr/bin/zigbee_version
 %attr(0644,root,root) /etc/connman/main.conf
 %attr(0644,root,root) /var/lib/connman/settings
 %attr(0644,root,root) /etc/modules-load.d/tun.conf
@@ -217,3 +219,30 @@ usb
 %attr(0644,root,root) /usr/lib/systemd/system/adbd.service
 %attr(0644,root,root) /usr/lib/systemd/system/rndis.service
 %attr(0644,root,root) /etc/udev/rules.d/99-adb-restart.rules
+
+###############################################################################
+# zigbee
+%package zigbee-common
+Summary:    zigbee
+Group:		System
+
+%description zigbee-common
+zigbee
+
+%post zigbee-common
+systemctl enable zigbee-daemon.service
+
+%files zigbee-common
+%attr(0644,root,root) /usr/lib/systemd/system/zigbee-daemon.service
+%attr(0644,root,root) /usr/lib/systemd/system/zigbee-pre.service
+%attr(0644,root,root) /usr/lib/libartik-zigbee.so*
+%attr(0644,root,root) /usr/lib/libartik-base.so*
+%attr(0755,root,root) /usr/bin/run_zigbee_daemon.sh
+%attr(0755,root,root) /usr/bin/test_zigbee
+%attr(0755,root,root) /usr/bin/zigbeed
+%attr(0755,root,root) /usr/bin/zigbee_cli
+%attr(0755,root,root) /usr/bin/zigbee_version
+%attr(0755,root,root) /usr/bin/test_base
+%attr(0644,root,root) /usr/share/doc/libartik-zigbee/LICENSE
+%attr(0644,root,root) /usr/share/doc/libartik-base/AUTHORS
+%attr(0644,root,root) /usr/share/doc/libartik-base/LICENSE
