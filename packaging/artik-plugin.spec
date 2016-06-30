@@ -89,6 +89,10 @@ mkdir -p %{buildroot}/etc/systemd/system
 cp scripts/units/zigbee-daemon.service %{buildroot}/usr/lib/systemd/system
 cp scripts/units/zigbee-pre.service %{buildroot}/usr/lib/systemd/system
 
+# wifi
+mkdir -p %{buildroot}/usr/bin
+cp prebuilt/wifi/SimpleWiFi.py %{buildroot}/usr/bin
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -249,3 +253,17 @@ systemctl enable zigbee-daemon.service
 %attr(0644,root,root) /usr/share/doc/libartik-zigbee/LICENSE
 %attr(0644,root,root) /usr/share/doc/libartik-base/AUTHORS
 %attr(0644,root,root) /usr/share/doc/libartik-base/LICENSE
+
+###############################################################################
+# wifi
+%package wifi-common
+Summary:    wifi
+Group:		System
+
+Requires:       python3
+
+%description wifi-common
+wifi
+
+%files wifi-common
+%attr(0755,root,root) /usr/bin/SimpleWiFi.py
