@@ -7,13 +7,10 @@ Release:	1
 Group:		System Environment/Base
 License:	none
 
-Requires:       systemd
-Requires:       setup
-Requires:       pulseaudio
-Requires:       bluez
-Requires:       connman
-Requires:       dnsmasq
-Requires:       java-1.8.0-openjdk
+Requires:	systemd
+Requires:	setup
+Requires:	dnsmasq
+Requires:	java-1.8.0-openjdk
 
 Source0:	%{name}-%{version}.tar.gz
 
@@ -150,7 +147,7 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 # Bluetooth
 # ARTIK common
 %package bluetooth-common
-Summary:    bluetooth
+Summary:	bluetooth
 Group:		System
 Requires:	bluez
 
@@ -168,8 +165,9 @@ systemctl enable bluetooth.service
 # network
 # ARTIK common
 %package network-common
-Summary:    network
+Summary:	network
 Group:		System
+Requires:	connman
 
 %description network-common
 Network Driver and DHCP configuration
@@ -187,9 +185,9 @@ systemctl enable connman.service
 # audio
 # ARTIK common
 %package audio-common
-Summary:    audio
+Summary:	audio
 Group:		System
-Requires:       pulseaudio
+Requires:	pulseaudio
 
 %description audio-common
 audio
@@ -215,7 +213,7 @@ sed -i '/<allow own="org.pulseaudio.Server"\/>/a \ \ \ \ <allow send_destination
 ###############################################################################
 # usb gadget
 %package usb-common
-Summary:    usb
+Summary:	usb
 Group:		System
 
 %description usb-common
@@ -230,7 +228,7 @@ usb
 ###############################################################################
 # zigbee
 %package zigbee-common
-Summary:    zigbee
+Summary:	zigbee
 Group:		System
 
 %description zigbee-common
@@ -257,10 +255,9 @@ systemctl enable zigbee-daemon.service
 ###############################################################################
 # wifi
 %package wifi-common
-Summary:    wifi
+Summary:	wifi
 Group:		System
-
-Requires:       python3
+Requires:	python3
 
 %description wifi-common
 wifi
