@@ -263,4 +263,4 @@ Requires:	python3
 wifi
 
 %files wifi-common
-%attr(0755,root,root) /usr/bin/SimpleWiFi.py
+%exclude %attr(0755,root,root) /usr/bin/SimpleWiFi.py
