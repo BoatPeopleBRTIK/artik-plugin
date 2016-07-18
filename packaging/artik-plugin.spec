@@ -98,6 +98,9 @@ ln -s /lib/systemd/system/multi-user.target /etc/systemd/system/default.target
 # Limit journal size
 sed -i "s/#SystemMaxUse=/SystemMaxUse=10M/" /etc/systemd/journald.conf
 
+# reset hardware watchdog
+sed -i 's/#ShutdownWatchdogSec=10min/ShutdownWatchdogSec=10s/g' /etc/systemd/system.conf
+
 # wpa_supplicant
 sed -i 's/INTERFACES=\"\"/INTERFACES=\"-iwlan0\"/g' /etc/sysconfig/wpa_supplicant
 sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
