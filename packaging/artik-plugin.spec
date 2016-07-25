@@ -90,6 +90,10 @@ cp scripts/units/zigbee-pre.service %{buildroot}/usr/lib/systemd/system
 mkdir -p %{buildroot}/usr/bin
 cp prebuilt/wifi/SimpleWiFi.py %{buildroot}/usr/bin
 
+# logdump
+mkdir -p %{buildroot}/usr/bin
+cp scripts/logdump.sh %{buildroot}/usr/bin
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -145,6 +149,8 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 %attr(0644,root,root) /opt/californium/lib/*.jar
 %attr(0755,root,root) /opt/leshan/*.jar
 %attr(0644,root,root) /opt/leshan/lib/*.jar
+# logdump
+%attr(0755,root,root) /usr/bin/logdump.sh
 
 ###############################################################################
 # Bluetooth
