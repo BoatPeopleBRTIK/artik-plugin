@@ -108,11 +108,18 @@ cat /sys/block/mmcblk0/stat >> $log_file
 
 echo -e >> $log_file
 echo "=== Journal Log" >> $log_file
-echo "$(/usr/bin/journalctl --no-pager -b -1)" >> $log_file
+journal=$(journalctl --list-boot --no-pager)
+num=${journal:0:2}
+if [ "$num" != " 0" ]
+then
+        num=-1
+fi
+echo "$(/usr/bin/journalctl --no-pager -b $num)" >> $log_file
 
 #copy external logs into dump
 cp /var/log/wpa_supplicant.log "$log_dir/$timestamp/" &> /dev/null
 cp /var/log/dnsmasq.log "$log_dir/$timestamp/" &> /dev/null
+cp -r /var/log/journal "$log_dir/$timestamp/" &> /dev/null
 
 #compress with tar.gz and remove source directory
 tar zcvfP "$log_dir/$timestamp.tar.gz" -C "$log_dir/" "$timestamp/." &> /dev/null
