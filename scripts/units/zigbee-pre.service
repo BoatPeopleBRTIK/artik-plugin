@@ -1,6 +1,0 @@
-[Unit]
-Description=find TTY for zigbee
-
-[Service]
-ExecStart=/usr/bin/run_zigbee_daemon.sh
-ExecStartPost=/usr/bin/sync
