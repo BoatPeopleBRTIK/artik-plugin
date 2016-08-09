@@ -1,5 +1,3 @@
-%define __jar_repack 0
-
 Name:		artik-plugin
 Summary:	ARTIK plugin files for fedora
 Version:	0.2
@@ -61,14 +59,6 @@ mkdir -p %{buildroot}/usr/lib/systemd/system
 cp scripts/units/adbd.service %{buildroot}/usr/lib/systemd/system
 cp scripts/units/rndis.service %{buildroot}/usr/lib/systemd/system
 cp scripts/rules/99-adb-restart.rules %{buildroot}/etc/udev/rules.d
-
-# CoAP californium
-mkdir -p %{buildroot}/opt/californium
-cp -r prebuilt/californium/* %{buildroot}/opt/californium/
-
-# lwM2M leshan
-mkdir -p %{buildroot}/opt/leshan
-cp -r prebuilt/leshan/* %{buildroot}/opt/leshan/
 
 # systemd module load service
 mkdir -p %{buildroot}/etc/systemd/system
@@ -139,10 +129,6 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 %attr(0644,root,root) /etc/profile.d/open-jdk.sh
 %attr(0644,root,root) /usr/lib/systemd/system/rfkill-unblock.service
 
-%attr(0755,root,root) /opt/californium/*.jar
-%attr(0644,root,root) /opt/californium/lib/*.jar
-%attr(0755,root,root) /opt/leshan/*.jar
-%attr(0644,root,root) /opt/leshan/lib/*.jar
 # logdump
 %attr(0755,root,root) /usr/bin/logdump.sh
 
