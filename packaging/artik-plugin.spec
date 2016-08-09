@@ -78,6 +78,10 @@ cp prebuilt/wifi/SimpleWiFi.py %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/bin
 cp scripts/logdump.sh %{buildroot}/usr/bin
 
+# licenses
+mkdir -p %{buildroot}/usr/share
+cp -r scripts/licenses %{buildroot}/usr/share
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -117,10 +121,6 @@ sed -i 's/\#except-interface=/except-interface=lo/g'  /etc/dnsmasq.conf
 # Sync after sshd key generation
 echo "ExecStartPost=/usr/bin/sync" >> /usr/lib/systemd/system/sshd-keygen.service
 sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/sshd-keygen.service
-
-# licenses
-mkdir -p %{buildroot}/usr/share
-cp -r scripts/licenses %{buildroot}/usr/share
 
 ###############################################################################
 # artik-plugin
@@ -241,4 +241,4 @@ Group:		System
 license
 
 %files license
-%exclude %attr(0644,root,root) /usr/share/licenses/*
+%attr(0644,root,root) /usr/share/licenses/*
