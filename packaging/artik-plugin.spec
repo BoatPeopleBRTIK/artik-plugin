@@ -118,6 +118,10 @@ sed -i 's/\#except-interface=/except-interface=lo/g'  /etc/dnsmasq.conf
 echo "ExecStartPost=/usr/bin/sync" >> /usr/lib/systemd/system/sshd-keygen.service
 sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/sshd-keygen.service
 
+# licenses
+mkdir -p %{buildroot}/usr/share
+cp -r scripts/licenses %{buildroot}/usr/share
+
 ###############################################################################
 # artik-plugin
 
@@ -226,3 +230,15 @@ wifi
 
 %files wifi-common
 %exclude %attr(0755,root,root) /usr/bin/SimpleWiFi.py
+
+###############################################################################
+# license
+%package license
+Summary:	license
+Group:		System
+
+%description license
+license
+
+%files license
+%exclude %attr(0644,root,root) /usr/share/licenses/*
