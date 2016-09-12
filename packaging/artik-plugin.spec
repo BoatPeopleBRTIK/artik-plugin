@@ -80,7 +80,7 @@ cp scripts/logdump.sh %{buildroot}/usr/bin
 
 # licenses
 mkdir -p %{buildroot}/usr/share
-cp -r scripts/licenses %{buildroot}/usr/share
+cp -r licenses %{buildroot}/usr/share
 
 %post
 # Setting default runlevel to multi-user text mode
