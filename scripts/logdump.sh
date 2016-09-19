@@ -127,3 +127,4 @@ rm -rf "$log_dir/$timestamp"
 
 set -e
 
+echo "The log has been stored in $log_dir/$timestamp.tar.gz"
