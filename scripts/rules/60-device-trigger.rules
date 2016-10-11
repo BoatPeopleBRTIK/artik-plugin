@@ -1,1 +1,1 @@
-ACTION=="add", KERNEL=="mmcblk[0-9]p[0-9]", RUN+="/usr/bin/udevadm trigger --type=devices"
+ACTION=="add", KERNEL=="mmcblk0p2", RUN+="/usr/bin/udevadm trigger --type=devices"
