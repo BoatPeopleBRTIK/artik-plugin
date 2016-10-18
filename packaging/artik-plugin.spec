@@ -70,6 +70,10 @@ cp scripts/booting-done.sh %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
 cp scripts/units/booting-done.service %{buildroot}/usr/lib/systemd/system
 
+# umount /usr/lib/modules
+mkdir -p %{buildroot}/usr/lib/systemd/system
+cp scripts/units/modules-umount.service %{buildroot}/usr/lib/systemd/system
+
 # wifi
 mkdir -p %{buildroot}/usr/bin
 cp prebuilt/wifi/SimpleWiFi.py %{buildroot}/usr/bin
@@ -105,6 +109,7 @@ systemctl enable systemd-timesyncd.service
 systemctl enable systemd-resolved.service
 systemctl enable booting-done.service
 systemctl enable rfkill-unblock.service
+systemctl enable modules-umount.service
 
 # systemd module load service
 systemctl enable systemd-modules-load.service
@@ -132,6 +137,7 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 %attr(0644,root,root) /usr/lib/systemd/system/booting-done.service
 %attr(0644,root,root) /etc/profile.d/open-jdk.sh
 %attr(0644,root,root) /usr/lib/systemd/system/rfkill-unblock.service
+%attr(0644,root,root) /usr/lib/systemd/system/modules-umount.service
 
 # logdump
 %attr(0755,root,root) /usr/bin/logdump.sh

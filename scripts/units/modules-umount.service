@@ -1,0 +1,10 @@
+[Unit]
+Descriptions=Unmounting /lib/modules partition
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/umount -l /usr/lib/modules
+
+[Install]
+WantedBy=umount.target
