@@ -82,10 +82,6 @@ cp scripts/logdump.sh %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/share
 cp -r licenses %{buildroot}/usr/share
 
-# device trriger rule
-mkdir -p %{buildroot}/etc/udev/rules.d
-cp scripts/rules/60-device-trigger.rules %{buildroot}/etc/udev/rules.d
-
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -139,9 +135,6 @@ sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/s
 
 # logdump
 %attr(0755,root,root) /usr/bin/logdump.sh
-
-# device trigger rule
-%attr(0644,root,root) /etc/udev/rules.d/60-device-trigger.rules
 
 ###############################################################################
 # Bluetooth
