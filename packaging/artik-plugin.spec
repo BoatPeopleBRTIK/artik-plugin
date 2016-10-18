@@ -104,6 +104,13 @@ sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
 # ignore power key action
 sed -i "s/#HandlePowerKey=poweroff/HandlePowerKey=ignore/" /etc/systemd/logind.conf
 
+# Set tcp pacing ca ratio to 200
+if [ `grep -c tcp_pacing_ca_ratio /etc/sysctl.conf` != 0 ]; then
+	sed -i "s/net.ipv4.tcp_pacing_ca_ratio=.*/net.ipv4.tcp_pacing_ca_ratio=200/g" /etc/sysctl.conf
+else
+	echo "net.ipv4.tcp_pacing_ca_ratio=200" >> /etc/sysctl.conf
+fi
+
 # Enable units
 systemctl enable systemd-timesyncd.service
 systemctl enable systemd-resolved.service
