@@ -242,7 +242,7 @@ Requires:	python3
 wifi
 
 %files wifi-common
-%exclude %attr(0755,root,root) /usr/bin/SimpleWiFi.py
+%attr(0755,root,root) /usr/bin/SimpleWiFi.py
 
 ###############################################################################
 # license
