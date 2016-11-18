@@ -1,5 +1,5 @@
 [Unit]
-Descriptions=Unmounting /lib/modules partition
+Description=Unmounting /lib/modules partition
 DefaultDependencies=no
 
 [Service]
