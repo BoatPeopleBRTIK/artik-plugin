@@ -24,6 +24,9 @@ rm -rf %{buildroot}
 # determine arch and OS for rpm
 mkdir -p %{buildroot}/etc/rpm
 cp -f scripts/platform %{buildroot}/etc/rpm
+%ifarch aarch64
+echo "aarch64-fedora-linux-gnu" > %{buildroot}/etc/rpm/platform
+%endif
 
 mkdir -p  %{buildroot}/etc/bluetooth
 cp -r prebuilt/bluetooth/common/* %{buildroot}/etc/bluetooth
