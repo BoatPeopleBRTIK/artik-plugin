@@ -7,8 +7,8 @@ ConditionFileNotEmpty=!/var/lib/alsa/asound.state
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/audio_setting.sh
-ExecStartPost=/usr/bin/systemctl restart alsa-state.service
-ExecStartPost=/usr/bin/sync
+ExecStartPost=/bin/systemctl restart alsa-state.service
+ExecStartPost=/bin/sync
 
 [Install]
 WantedBy=multi-user.target
