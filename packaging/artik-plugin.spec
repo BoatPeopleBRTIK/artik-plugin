@@ -134,8 +134,7 @@ sed -i 's/\#except-interface=/except-interface=lo/g'  /etc/dnsmasq.conf
 /usr/sbin/alternatives --install /usr/bin/jar jar /usr/java/default/bin/jar 1
 
 # Sync after sshd key generation
-echo "ExecStartPost=/usr/bin/sync" >> /usr/lib/systemd/system/sshd-keygen.service
-sed -i 's/ConditionPathExists/ConditionFileNotEmpty/g' /usr/lib/systemd/system/sshd-keygen.service
+sed -i 's/\[Service\]/\[Service\]\nExecStartPost=\/usr\/bin\/sync/g' /usr/lib/systemd/system/sshd-keygen\@.service
 
 ###############################################################################
 # artik-plugin
