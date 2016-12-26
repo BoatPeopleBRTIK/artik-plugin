@@ -48,6 +48,10 @@ case "$1" in
 		# Resolve conflicts for connman
 		sed -i 's/\#except-interface=/except-interface=lo/g'  /etc/dnsmasq.conf
 
+		# Enable sshd-keygen.service
+		sed -i "/^After=/ s/$/ sshd-keygen.service/" /lib/systemd/system/ssh.service
+		sed -i "/^After=/ a Wants=sshd-keygen.service" /lib/systemd/system/ssh.service
+
 		# Enable units
 		systemctl enable systemd-timesyncd.service
 		systemctl enable systemd-resolved.service
