@@ -19,7 +19,7 @@ fi
 echo -e >> $log_file
 echo "=== Release Info" >> $log_file
 cat /etc/artik_release >> $log_file
-cat /etc/system-release >> $log_file
+cat /etc/os-release >> $log_file
 
 echo -e >> $log_file
 echo "=== H/W Info" >> $log_file
@@ -56,7 +56,7 @@ echo "$timezone" >> $log_file
 
 echo -e >> $log_file
 echo "=== Process Info" >> $log_file
-echo "$(/usr/bin/ps auxfw)" >> $log_file
+echo "$(/bin/ps auxfw)" >> $log_file
 
 echo -e >> $log_file
 echo "=== System Usage" >> $log_file
@@ -96,7 +96,7 @@ cat /proc/diskstats >> $log_file
 
 echo -e >> $log_file
 echo "=== Disk Usage" >> $log_file
-echo "$(/usr/bin/df -h)" >> $log_file
+echo "$(/bin/df -h)" >> $log_file
 
 echo -e >> $log_file
 echo "=== eMMC EXT_CSD" >> $log_file
@@ -109,20 +109,30 @@ cat /sys/block/mmcblk0/stat >> $log_file
 echo -e >> $log_file
 echo "=== Journal Log" >> $log_file
 journal=$(journalctl --list-boot --no-pager)
-num=${journal:0:2}
-if [ "$num" != " 0" ]
+num=`echo ${journal} | awk '{print $1}'`
+if [ "$num" != "0" ]
 then
         num=-1
 fi
-echo "$(/usr/bin/journalctl --no-pager -b $num)" >> $log_file
+echo "$(/bin/journalctl --no-pager -b $num)" >> $log_file
 
 #copy external logs into dump
-cp /var/log/wpa_supplicant.log "$log_dir/$timestamp/" &> /dev/null
-cp /var/log/dnsmasq.log "$log_dir/$timestamp/" &> /dev/null
-cp -r /var/log/journal "$log_dir/$timestamp/" &> /dev/null
+if [ -e /var/log/wpa_supplicant.log ]; then
+	cp /var/log/wpa_supplicant.log "$log_dir/$timestamp/" &> /dev/null
+fi
+if [ -e /var/log/dnsmasq.log ]; then
+	cp /var/log/dnsmasq.log "$log_dir/$timestamp/" &> /dev/null
+fi
+if [ -e /var/log/journal ]; then
+	cp -r /var/log/journal "$log_dir/$timestamp/" &> /dev/null
+elif [ -e /run/log/journal ]; then
+	cp -r /run/log/journal "$log_dir/$timestamp/" &> /dev/null
+fi
 
 #compress with tar.gz and remove source directory
-tar zcvfP "$log_dir/$timestamp.tar.gz" -C "$log_dir/" "$timestamp/." &> /dev/null
+sync
+sync
+tar zcfP "$log_dir/$timestamp.tar.gz" -C "$log_dir/" "$timestamp" &> /dev/null
 rm -rf "$log_dir/$timestamp"
 
 set -e
