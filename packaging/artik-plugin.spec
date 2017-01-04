@@ -97,6 +97,9 @@ ln -s /lib/systemd/system/multi-user.target /etc/systemd/system/default.target
 # Limit journal size
 sed -i "s/#SystemMaxUse=/SystemMaxUse=10M/" /etc/systemd/journald.conf
 
+# create directory for journal log on disk
+mkdir -p /var/log/journal
+
 # reset hardware watchdog
 sed -i 's/#ShutdownWatchdogSec=10min/ShutdownWatchdogSec=10s/g' /etc/systemd/system.conf
 
