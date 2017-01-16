@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9)
 
 Package: artik-plugin
 Architecture: any-arm arm64
-Depends: ${misc:Depends}, dnsmasq, default-jdk-headless, openssh-server
+Depends: ${misc:Depends}, dnsmasq, openssh-server
 Standards-Version: 3.9.6
 Description: ARTIK plugin files
 
