@@ -1,6 +1,6 @@
 Name:		artik-plugin
 Summary:	ARTIK plugin files for fedora
-Version:	1.0.7
+Version:	1.0.8
 Release:	1
 Group:		System Environment/Base
 License:	none
