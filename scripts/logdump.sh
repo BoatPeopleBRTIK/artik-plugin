@@ -14,6 +14,7 @@ if [ -f "$serial" ]; then
 else
         serial=None
 fi
+model=$(cat /etc/artik_release | grep MODEL | awk -F\= '{print $2}')
 
 #Append logs one by one
 echo -e >> $log_file
@@ -105,6 +106,13 @@ cat /sys/kernel/debug/mmc0/mmc0\:0001/ext_csd >> $log_file
 echo -e >> $log_file
 echo "=== eMMC Info" >> $log_file
 cat /sys/block/mmcblk0/stat >> $log_file
+
+# bluetooth vendor specific command
+if [ "$model" == "ARTIK530" ]; then
+	echo -e >> $log_file
+	echo "=== Bluetooth OTP Configuration" >> $log_file
+	hcitool cmd 3f 62 37 | awk 'NR > 3' >> $log_file
+fi
 
 echo -e >> $log_file
 echo "=== Journal Log" >> $log_file
