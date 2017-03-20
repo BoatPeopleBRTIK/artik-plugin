@@ -1,3 +1,10 @@
+artik-plugin (1.0.9) xenial; urgency=medium
+
+  * bluetooth: disable secure connections feature
+  * logdump: add Marvell specific OTP configuration
+
+ -- Chanho Park <chanho61.park@samsung.com>  Mon, 20 Mar 2017 15:38:53 +0900
+
 artik-plugin (1.0.7) unstable; urgency=medium
 
   * Initial release.
