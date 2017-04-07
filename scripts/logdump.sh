@@ -8,7 +8,13 @@ timezone=$(ls -al /etc/localtime)
 log_dir="/var/log/logdump"
 mkdir -p $log_dir/$timestamp
 log_file="$log_dir/$timestamp/logdump_$timestamp.log"
-revision=$(cat /proc/device-tree/revision)
+
+if [ -e /proc/device-tree/revision ]; then
+	revision=$(cat /proc/device-tree/revision)
+else
+	revision=None
+fi
+
 if [ -f "$serial" ]; then
         serial=$(cat /proc/device-tree/serial-number)
 else
