@@ -207,6 +207,7 @@ audio
 systemctl enable pulseaudio.service
 systemctl enable audiosetting.service
 
+sed -i 's/; exit-idle-time = 20/exit-idle-time = -1/g' /etc/pulse/daemon.conf
 sed -i 's/load-module module-udev-detect/load-module module-udev-detect tsched=0/g' /etc/pulse/default.pa
 echo "load-module module-switch-on-connect" >> /etc/pulse/default.pa
 cp /etc/pulse/default.pa /etc/pulse/system.pa
