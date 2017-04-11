@@ -122,13 +122,7 @@ fi
 
 echo -e >> $log_file
 echo "=== Journal Log" >> $log_file
-journal=$(journalctl --list-boot --no-pager)
-num=`echo ${journal} | awk '{print $1}'`
-if [ "$num" != "0" ]
-then
-        num=-1
-fi
-echo "$(/bin/journalctl --no-pager -b $num)" >> $log_file
+echo "$(/bin/journalctl --no-pager)" >> $log_file
 
 #copy external logs into dump
 if [ -e /var/log/wpa_supplicant.log ]; then
