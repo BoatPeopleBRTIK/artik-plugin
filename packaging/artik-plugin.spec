@@ -1,6 +1,6 @@
 Name:		artik-plugin
 Summary:	ARTIK plugin files for fedora
-Version:	1.0.10
+Version:	1.0.11
 Release:	1
 Group:		System Environment/Base
 License:	none
@@ -9,7 +9,7 @@ Requires:	systemd
 Requires:	setup
 Requires:	dnsmasq
 Requires:	java-1.8.0-openjdk
-
+Requires:	fedora-repos
 Source0:	%{name}-%{version}.tar.gz
 
 %description
@@ -89,6 +89,10 @@ cp scripts/logdump.sh %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/share
 cp -r licenses %{buildroot}/usr/share
 
+# archive repo
+mkdir -p %{buildroot}/etc/yum.repos.d
+cp -f scripts/repos/* %{buildroot}/etc/yum.repos.d
+
 %post
 # Setting default runlevel to multi-user text mode
 rm -f /etc/systemd/system/default.target
@@ -153,6 +157,9 @@ sed -i 's/\[Service\]/\[Service\]\nExecStartPost=\/usr\/bin\/sync/g' /usr/lib/sy
 
 # logdump
 %attr(0755,root,root) /usr/bin/logdump.sh
+
+# archive repos
+%attr(0644,root,root) /etc/yum.repos.d/*.repo
 
 ###############################################################################
 # Bluetooth
