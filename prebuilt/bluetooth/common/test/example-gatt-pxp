@@ -41,7 +41,7 @@ alert_level = [0x0,0x1,0x2]
 def generic_error_cb(error):
     print('D-Bus call failed: ' + str(error))
     mainloop.quit()
-    
+
 def lls_level_val_cb(value):
     print('Alert Level value : ' + str(int(value[0])))
     time.sleep(2)
@@ -52,13 +52,9 @@ def lls_writed_val_cb():
 
 def ial_writed_val_cb():
     print('Immediate alert level : ' + str(alert_level[rand_num]))
-    
+
 def tx_power_val_cb(value):
     print('Tx power value : ' + str(int(value[0])))
-    
-def pxp_start_notify_cb():
-    print('PXP Measurement notifications enable')    
-
 
 def pxp_msrmt_changed_cb(iface, changed_props, invalidated_props):
     if iface != BLUEZ_DEVICE:
@@ -91,10 +87,10 @@ def start_client():
                                 dbus_interface=GATT_CHRC_IFACE)
 
     lls_level[0].ReadValue({}, reply_handler=lls_level_val_cb,
-       	                        error_handler=generic_error_cb,
-               	                dbus_interface=GATT_CHRC_IFACE)
-    
-    rand_num = random.randrange(0,3)    
+                               error_handler=generic_error_cb,
+                               dbus_interface=GATT_CHRC_IFACE)
+
+    rand_num = random.randrange(0,3)
 
     imme_level[0].WriteValue(dbus.Array([dbus.Byte(alert_level[rand_num])]), {},
 				reply_handler=ial_writed_val_cb,
@@ -117,9 +113,6 @@ def process_chrc(chrc_path, UUID):
         print('tx power uuid')
         global tx_power_level
         tx_power_level = (chrc, chrc_props)
-        tx_power_level[0].StartNotify(reply_handler=pxp_start_notify_cb,
-                               error_handler=generic_error_cb,
-                               dbus_interface=GATT_CHRC_IFACE)
 
     elif uuid == ALERT_LEVEL and UUID == IMMEDIATE_ALERT_UUID:
         print('immediate alert level uuid')
@@ -158,7 +151,7 @@ def process_pxp_service(service_path, chrc_paths):
                 process_chrc(chrc_path, uuid)
 
         return True
- 
+
     elif uuid == IMMEDIATE_ALERT_UUID:
         print('Proximity Immediate alert Service found: ' + service_path)
 
@@ -219,7 +212,7 @@ def main():
     pxp_msrmt_prop_iface.connect_to_signal("PropertiesChanged",
            	                               pxp_msrmt_changed_cb)
 
-    start_client() 
+    start_client()
 
     mainloop.run()
 
