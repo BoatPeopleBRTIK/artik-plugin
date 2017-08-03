@@ -4,3 +4,4 @@ scripts/units/rfkill-unblock.service /lib/systemd/system/
 scripts/units/modules-umount.service /lib/systemd/system/
 scripts/units/sshd-keygen.service /lib/systemd/system/
 scripts/logdump.sh usr/bin/
+scripts/.bash_aliases /root/
