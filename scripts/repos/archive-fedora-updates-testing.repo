@@ -1,7 +1,7 @@
-[archive-fupdates-testing]
+[archives-updates-testing]
 name=Fedora $releasever - $basearch - Test Updates
 failovermethod=priority
-baseurl=http://archive.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/
+baseurl=http://archives.fedoraproject.org/pub/archive/fedora/linux/updates/testing/$releasever/$basearch/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
 enabled=0
 gpgcheck=1
@@ -9,10 +9,10 @@ metadata_expire=6h
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 skip_if_unavailable=False
 
-[archive-fupdates-testing-debuginfo]
+[archives-updates-testing-debuginfo]
 name=Fedora $releasever - $basearch - Test Updates Debug
 failovermethod=priority
-baseurl=http://archive.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/debug/
+baseurl=http://archives.fedoraproject.org/pub/archive/fedora/linux/updates/testing/$releasever/$basearch/debug/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-debug-f$releasever&arch=$basearch
 enabled=0
 gpgcheck=1
@@ -20,10 +20,10 @@ metadata_expire=6h
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 skip_if_unavailable=False
 
-[archive-fupdates-testing-source]
+[archives-updates-testing-source]
 name=Fedora $releasever - Test Updates Source
 failovermethod=priority
-baseurl=http://archive.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/SRPMS/
+baseurl=http://archives.fedoraproject.org/pub/archive/fedora/linux/updates/testing/$releasever/SRPMS/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-source-f$releasever&arch=$basearch
 enabled=0
 gpgcheck=1
