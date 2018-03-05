@@ -137,6 +137,26 @@ elif [ -e /run/log/journal ]; then
 	cp -r /run/log/journal "$log_dir/$timestamp/" &> /dev/null
 fi
 
+#check distro and dump package list
+if [ -f /etc/os-release ]; then
+	. /etc/os-release
+	OS=$NAME
+	VER=$VERSION_ID
+elif type lsb_release >/dev/null 2>&1; then
+	OS=$(lsb_release -si)
+	VER=$(lsb_release -sr)
+elif [ -f /etc/lsb-release ]; then
+	. /etc/lsb-release
+	OS=$DISTRIB_ID
+	VER=$DISTRIB_RELEASE
+fi
+
+if [ $OS == "Fedora" ]; then
+	rpm -qa > "$log_dir/$timestamp/package_list"
+elif [ $OS == "Ubuntu" ]; then
+	apt list --installed > "$log_dir/$timestamp/package_list" 2> /dev/null
+fi
+
 #compress with tar.gz and remove source directory
 sync
 sync
