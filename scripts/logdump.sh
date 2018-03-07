@@ -113,6 +113,15 @@ echo -e >> $log_file
 echo "=== eMMC Info" >> $log_file
 cat /sys/block/mmcblk0/stat >> $log_file
 
+echo -e >> $log_file
+echo "=== Firmware versions" >> $log_file
+echo "- WIFI" >> $log_file
+echo "$(/etc/wifi/fwversion.sh)" >> $log_file
+echo "- BT" >> $log_file
+echo "$(/etc/bluetooth/fwversion.sh)" >> $log_file
+echo "- Zigbee" >> $log_file
+echo "$(/usr/bin/802.15.4_fwversion.py)" >> $log_file
+
 # bluetooth vendor specific command
 if [ "$model" == "ARTIK530" ]; then
 	echo -e >> $log_file
