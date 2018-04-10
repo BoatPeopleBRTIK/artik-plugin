@@ -27,8 +27,10 @@ case "$1" in
 		sed -i 's/#ShutdownWatchdogSec=10min/ShutdownWatchdogSec=10s/g' /etc/systemd/system.conf
 
 		# wpa_supplicant
-		sed -i 's/INTERFACES=\"\"/INTERFACES=\"-iwlan0\"/g' /etc/sysconfig/wpa_supplicant
-		sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
+		if [ -e /etc/sysconfig/wpa_supplicant ]; then
+			sed -i 's/INTERFACES=\"\"/INTERFACES=\"-iwlan0\"/g' /etc/sysconfig/wpa_supplicant
+			sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
+		fi
 
 		# ignore power key action
 		sed -i "s/#HandlePowerKey=poweroff/HandlePowerKey=ignore/" /etc/systemd/logind.conf
