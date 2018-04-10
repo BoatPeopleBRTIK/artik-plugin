@@ -19,6 +19,11 @@ set -e
 
 case "$1" in
 	configure)
+		if ! `grep -q 'nodnsproxy' /lib/systemd/system/connman.service`; then
+			sed -i -e '/^ExecStart=.*connmand/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
+			sync
+		fi
+
 		systemctl enable connman.service
 		systemctl disable connman-wait-online.service
 		;;

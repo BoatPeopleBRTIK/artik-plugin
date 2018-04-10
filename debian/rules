@@ -5,3 +5,9 @@
 
 override_dh_auto_install:
 	dh_auto_install
+	mkdir -p debian/artik-plugin-network-common/etc/connman
+	install -m 0644 prebuilt/connman/etc/connman/main.conf debian/artik-plugin-network-common/etc/connman/
+	mkdir -p debian/artik-plugin-network-common/var/lib/connman
+	install -m 0644 prebuilt/connman/var/lib/connman/settings debian/artik-plugin-network-common/var/lib/connman/
+	mkdir -p debian/artik-plugin-network-common/etc/modules-load.d
+	install -m 0644 scripts/modules-load.d/tun.conf debian/artik-plugin-network-common/etc/modules-load.d/
