@@ -1,3 +1,12 @@
+artik-plugin (1.0.10) artik; urgency=medium
+
+  * audio: append module-switch-on-connect option if not existing
+  * wpa_supplicant: modify wpa_supplicant config if existing
+  * connman: divert connman configurations
+  * ubuntu: disable DNSStub of systemd-resolved
+
+ -- Chanho Park <chanho61.park@samsung.com>  Tue, 10 Apr 2018 18:30:40 +0900
+
 artik-plugin (1.0.9) xenial; urgency=medium
 
   * bluetooth: disable secure connections feature
