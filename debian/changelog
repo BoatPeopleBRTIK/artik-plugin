@@ -1,3 +1,9 @@
+artik-plugin (1.0.11) artik; urgency=medium
+
+  * override wpa_supplicant configurations
+
+ -- Chanho Park <chanho61.park@samsung.com>  Fri, 27 Apr 2018 15:52:24 +0900
+
 artik-plugin (1.0.10) artik; urgency=medium
 
   * audio: append module-switch-on-connect option if not existing
