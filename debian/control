@@ -38,7 +38,7 @@ Package: artik-plugin-wifi-common
 Section: Miscellaneous
 Architecture: any-arm arm64
 Description: ARTIK wifi common plugin
-Depends: python3
+Depends: python3, wpasupplicant
 
 Package: artik-plugin-license
 Section: Miscellaneous
