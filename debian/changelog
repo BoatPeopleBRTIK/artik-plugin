@@ -1,3 +1,9 @@
+artik-plugin (1.0.13) artik; urgency=medium
+
+  * Revert "network-common: disassociate wlan interface from connman"
+
+ -- Chanho Park <chanho61.park@samsung.com>  Fri, 01 Jun 2018 14:59:52 +0900
+
 artik-plugin (1.0.12) artik; urgency=medium
 
   * network-common: disassociate wlan interface from connman(>=1.34)
