@@ -24,13 +24,6 @@ case "$1" in
 			sync
 		fi
 
-		CONNMAN_VER=`dpkg-query -W -f='${Version}' connman`
-		if `dpkg --compare-versions ${CONNMAN_VER} gt 1.34`; then
-			if ! `grep -q '^NetworkInterfaceBlacklist.*wlan,p2p' /etc/connman/main.conf`; then
-				sed -i -e '/^NetworkInterfaceBlacklist =.*/s/$/,wlan,p2p/' /etc/connman/main.conf
-			fi
-		fi
-
 		systemctl enable connman.service
 		systemctl disable connman-wait-online.service
 		;;
