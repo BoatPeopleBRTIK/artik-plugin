@@ -22,8 +22,12 @@ case "$1" in
 		systemctl enable pulseaudio.service
 		systemctl enable audiosetting.service
 		sed -i 's/; exit-idle-time = 20/exit-idle-time = -1/g' /etc/pulse/daemon.conf
-		sed -i 's/load-module module-udev-detect/load-module module-udev-detect tsched=0/g' /etc/pulse/default.pa
-		sed -i 's/load-module module-card-restore/#load-module module-card-restore/g' /etc/pulse/default.pa
+		if ! grep -q '^load-module module-udev-detect.*tsched=0' /etc/pulse/default.pa ; then
+			sed -i '/^load-module module-udev-detect/s/$/ tsched=0/' /etc/pulse/default.pa /etc/pulse/default.pa
+		fi
+		if ! grep -q '#load-module module-card-restore' /etc/pulse/default.pa ; then
+			sed -i 's/load-module module-card-restore/#load-module module-card-restore/g' /etc/pulse/default.pa
+		fi
 		grep -q "load-module module-switch-on-connect" /etc/pulse/default.pa || \
 			echo "load-module module-switch-on-connect" >> /etc/pulse/default.pa
 		cp /etc/pulse/default.pa /etc/pulse/system.pa
@@ -31,7 +35,10 @@ case "$1" in
 		/usr/sbin/usermod -a -G audio pulse
 
 		# pulseaudio settings for bluetooth a2dp_sink
-		sed -i '/<allow own="org.pulseaudio.Server"\/>/a \ \ \ \ <allow send_destination="org.bluez"/>' /etc/dbus-1/system.d/pulseaudio-system.conf
+		grep -q 'allow send_destination="org.bluez"' /etc/dbus-1/system.d/pulseaudio-system.conf
+		if [ $? -eq 1 ]; then
+			sed -i '/<allow own="org.pulseaudio.Server"\/>/a \ \ \ \ <allow send_destination="org.bluez"/>' /etc/dbus-1/system.d/pulseaudio-system.conf
+		fi
 		;;
 	abort-upgrade|abort-deconfigure|abort-remove)
 		;;
