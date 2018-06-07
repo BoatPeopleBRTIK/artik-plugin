@@ -35,8 +35,7 @@ case "$1" in
 		/usr/sbin/usermod -a -G audio pulse
 
 		# pulseaudio settings for bluetooth a2dp_sink
-		grep -q 'allow send_destination="org.bluez"' /etc/dbus-1/system.d/pulseaudio-system.conf
-		if [ $? -eq 1 ]; then
+		if ! grep -q 'allow send_destination="org.bluez"' /etc/dbus-1/system.d/pulseaudio-system.conf ; then
 			sed -i '/<allow own="org.pulseaudio.Server"\/>/a \ \ \ \ <allow send_destination="org.bluez"/>' /etc/dbus-1/system.d/pulseaudio-system.conf
 		fi
 		;;

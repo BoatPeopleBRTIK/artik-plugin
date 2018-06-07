@@ -1,3 +1,9 @@
+artik-plugin (1.0.15) artik; urgency=medium
+
+  * debian: build: fix postinst for audio setting
+
+ -- jae-young <jae-young@MyLinux>  Fri, 08 Jun 2018 08:40:48 +0900
+
 artik-plugin (1.0.14) artik; urgency=medium
 
   * debian: audio: add exception handling
