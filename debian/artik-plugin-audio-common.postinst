@@ -23,7 +23,7 @@ case "$1" in
 		systemctl enable audiosetting.service
 		sed -i 's/; exit-idle-time = 20/exit-idle-time = -1/g' /etc/pulse/daemon.conf
 		if ! grep -q '^load-module module-udev-detect.*tsched=0' /etc/pulse/default.pa ; then
-			sed -i '/^load-module module-udev-detect/s/$/ tsched=0/' /etc/pulse/default.pa /etc/pulse/default.pa
+			sed -i '/^load-module module-udev-detect/s/$/ tsched=0/' /etc/pulse/default.pa
 		fi
 		if ! grep -q '#load-module module-card-restore' /etc/pulse/default.pa ; then
 			sed -i 's/load-module module-card-restore/#load-module module-card-restore/g' /etc/pulse/default.pa

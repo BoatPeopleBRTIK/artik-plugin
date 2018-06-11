@@ -1,3 +1,9 @@
+artik-plugin (1.0.16) artik; urgency=medium
+
+  * debian: build: remove duplicated expression
+
+ -- jae-young <jae-young@MyLinux>  Mon, 11 Jun 2018 19:50:06 +0900
+
 artik-plugin (1.0.15) artik; urgency=medium
 
   * debian: build: fix postinst for audio setting
