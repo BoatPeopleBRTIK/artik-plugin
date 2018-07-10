@@ -1,3 +1,9 @@
+artik-plugin (1.0.17) artik; urgency=medium
+
+  * usb-gadget: runtime detection of UDC name
+
+ -- jae-young <jae-young@MyLinux>  Tue, 10 Jul 2018 20:43:48 +0900
+
 artik-plugin (1.0.16) artik; urgency=medium
 
   * debian: build: remove duplicated expression
