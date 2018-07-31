@@ -1,5 +1,6 @@
 scripts/booting-done.sh usr/bin/
 scripts/units/booting-done.service /lib/systemd/system/
+scripts/units/serial-getty\@.service.d /lib/systemd/system/
 scripts/units/rfkill-unblock.service /lib/systemd/system/
 scripts/units/modules-umount.service /lib/systemd/system/
 scripts/units/sshd-keygen.service /lib/systemd/system/

@@ -1,3 +1,9 @@
+artik-plugin (1.0.18) artik; urgency=medium
+
+  * booting-done: move "booting done" log forward
+
+ -- jae-young <jae-young@MyLinux>  Wed, 01 Aug 2018 13:26:56 +0900
+
 artik-plugin (1.0.17) artik; urgency=medium
 
   * usb-gadget: runtime detection of UDC name

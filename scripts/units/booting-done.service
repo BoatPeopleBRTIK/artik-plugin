@@ -1,6 +1,6 @@
 [Unit]
 Description=Booting is finished
-After=multi-user.target
+After=network.target
 DefaultDependencies=no
 
 [Service]
