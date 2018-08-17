@@ -1,5 +1,5 @@
 [Unit]
-Descriptions=Android debug bridge daemon
+Description=Android debug bridge daemon
 
 [Service]
 Type=forking
