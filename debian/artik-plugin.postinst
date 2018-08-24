@@ -61,7 +61,6 @@ case "$1" in
 		# Enable units
 		systemctl enable systemd-timesyncd.service
 		systemctl enable systemd-resolved.service
-		systemctl enable booting-done.service
 		systemctl enable rfkill-unblock.service
 		systemctl enable modules-umount.service
 

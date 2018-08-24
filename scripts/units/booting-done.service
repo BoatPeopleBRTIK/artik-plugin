@@ -1,12 +1,8 @@
 [Unit]
 Description=Booting is finished
-After=network.target
-DefaultDependencies=no
+After=systemd-user-sessions.service
 
 [Service]
-Type=oneshot
+Type=idle
 StandardOutput=tty
 ExecStart=/usr/bin/booting-done.sh
-
-[Install]
-WantedBy=multi-user.target
