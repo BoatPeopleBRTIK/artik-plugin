@@ -1,2 +1,4 @@
 scripts/rules/10-local.rules etc/udev/rules.d/
 prebuilt/bluetooth/common/* etc/bluetooth/
+scripts/set-btmgmt.sh usr/bin/
+scripts/units/set-btmgmt.service /lib/systemd/system/

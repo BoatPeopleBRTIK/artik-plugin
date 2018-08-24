@@ -1,0 +1,10 @@
+[Unit]
+Description=Write Secure Connections Host Support Command
+After=bluetooth.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/set-btmgmt.sh
+
+[Install]
+WantedBy=bluetooth.target

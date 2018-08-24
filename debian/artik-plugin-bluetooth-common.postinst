@@ -20,6 +20,7 @@ set -e
 case "$1" in
 	configure)
 		systemctl enable bluetooth.service
+		systemctl enable set-btmgmt.service
 		;;
 	abort-upgrade|abort-deconfigure|abort-remove)
 		;;
