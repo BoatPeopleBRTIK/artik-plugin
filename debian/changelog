@@ -1,3 +1,10 @@
+artik-plugin (1.0.19) artik; urgency=medium
+
+  * booting-done: revise dependency
+  * bluetooth: split setting btmgmt from booting-done
+
+ -- jae-young <jae-young@MyLinux>  Fri, 24 Aug 2018 11:11:08 +0900
+
 artik-plugin (1.0.18) artik; urgency=medium
 
   * booting-done: move "booting done" log forward
