@@ -1,6 +1,7 @@
 [Unit]
 Description=Booting is finished
 After=systemd-user-sessions.service
+ConditionPathExists=!/tmp/.booting-done
 
 [Service]
 Type=idle
