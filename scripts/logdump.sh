@@ -120,7 +120,11 @@ echo "$(/etc/wifi/fwversion.sh)" >> $log_file
 echo "- BT" >> $log_file
 echo "$(/etc/bluetooth/fwversion.sh)" >> $log_file
 echo "- Zigbee" >> $log_file
-echo "$(/usr/bin/802.15.4_fwversion.py)" >> $log_file
+if [ -e /usr/bin/802.15.4_fwversion ]; then
+	echo "$(/usr/bin/802.15.4_fwversion)" >> $log_file
+elif [ -e /usr/bin/802.15.4_fwversion.py ]; then
+	echo "$(/usr/bin/802.15.4_fwversion.py)" >> $log_file
+fi
 
 # bluetooth vendor specific command
 if [ "$model" == "ARTIK530" ]; then
